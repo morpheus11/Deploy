@@ -2160,7 +2160,11 @@ Select Signature in Field</label>
         if (SelectSignatureInFieldValue!=0) {var SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText+'\n'+"Master"}
         /*Logic related Select_Signature_in_Field END*/
 
+        /* last ver of variable
         var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"o/"+yearOfReport+"/"+typeOfReport
+        document.getElementById('Subject').value=subject*/
+
+        var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport
         document.getElementById('Subject').value=subject
 
         var headOfMessage = "+++###+++   "+typeOfReport+" +++###+++"
@@ -2268,7 +2272,9 @@ Select Signature in Field</label>
       $('#gSheet').click(function (event) {
 
               var formData = {
-                                Def: deficiencyReportNumber+'o',
+                                /* last version
+                                Def: deficiencyReportNumber+'o',*/
+                                Def: deficiencyReportNumber,
                                 No: "No",
                                 Year: yearOfReport,
                                 Grade: typeOfReportShortString,  
