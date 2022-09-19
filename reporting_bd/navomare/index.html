@@ -1914,8 +1914,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 <div class="mb-3">
      <select class="form-select" id="Veesel_IMO_number" aria-label="Default select example">
           <option selected>Please select Vessel IMO number</option>
-          <option value="1">7924401</option>
-          <option value="2">8912481</option>
+          <option value="1">9343821</option>
+          <option value="2">9435026</option>
           <option value="3">5879953</option>
      </select>
  </div>
@@ -2021,169 +2021,175 @@ Select Signature in Field</label>
             
         
       
-    <script>
-      
-        var alfaShort;
-        var subject;
-        var headOfMessage;
-        var shipsName;
-        var attentionTo;
-        var alfa;
-        var bravo;
-        var charlie;
-        var delta;
-        var echo;
-        var foxtrot;
-        var golf;
-        var hotel;
-        var abcde;
-        var yearOfReport;
-        var vesselImoNumber;
-        var vesselCountNumber;
-        var formData;
-        var voyageNo;
-        var dateOfIncident;
-        var deficiencyReportNumber;
-        var atSeaOrInPort;
-        var typeOfReport;
-        var selectedDepartment;
-        var detailedDescriptionOfIncident;
-        var whyDidItHappen;
-        var proposedCorrectiveAction;
-        var proposedPreventiveAction;
-        var SelectSignatureInFieldValue;
-        var SelectSignatureInFieldText;
-        var msgBody; 
-        var attentionToSoft;
-        var msgBodyForSoft;
-        var typeOfReportValue;
-        var typeOfReportShortString;
-        var dataMy;
-        var rowMy;    
-        
+<script>
+        /*ALL VARIABLES LISTED BELOW:*/
 
+        /*id="Veesel_IMO_number" variables START*/
+        var vesselImoNumber;
+        var vesselImoString;
+        var vesselCapitaLetterlName;
+        var vesselCountNumber;
+        /*id="Veesel_IMO_number" variables END*/
+
+        /*id="dateOfIncident" variables START*/
+        var dateOfIncident
+        var yearOfReport
+        /*id="dateOfIncident" variables END*/
+
+        var deficiencyReportNumber
+        var voyageNo
+
+        /*id="at_sea_or_in_port" variables START*/
+        var v
+        var atSeaOrInPort
+        /*id="at_sea_or_in_port" variables END*/
+
+        /*id="type_of_report" variables START*/
+        var g
+        var m
+        var typeOfReport
+        var typeOfReportValue
+        var typeOfReportShortString
+        /*id="type_of_report" variables END*/
+        
+        /*id="select_department" variables START*/
+        var k
+        var selectedDepartment
+        /*id="select_department" variables END*/
+
+
+        var detailedDescriptionOfIncident
+        var whyDidItHappen
+        var proposedCorrectiveAction
+        var proposedPreventiveAction
+
+        /*id="Select_Signature_in_Field" variables START*/
+        var l
+        var SelectSignatureInFieldValue
+        var SelectSignatureInFieldText
+        /*id="Select_Signature_in_Field" variables END*/
+
+        /*special for modalWindowWithEmailBody*/
+        var subject
+        var msgBody
+        var headOfMessage
+        var shipsName
+        var attentionTo
+        var alfa
+        var bravo
+        var charlie
+        var delta
+        var echo
+        var foxtrot
+        var golf
+        var hotel
+        /*special for modalWindowWithEmailBody*/
+
+        /*post to google script*/
+        var abcde
+        var attentionToGmail
+        var msgBodyForGmail
+        /*___________________________________________________________________________________*/
+        /*code below triggerd by press button PREVIEW*/
         var modalWindowWithEmailBody = document.getElementById('modalWindowWithEmailBody')
         modalWindowWithEmailBody.addEventListener('show.bs.modal', function (event) {
-    
+
+        /*Logic related to IMO NUMBERS START*/
         var e = document.getElementById("Veesel_IMO_number");
         var vesselImoNumber = e.options[e.selectedIndex].value;
-        
-        var v = document.getElementById("at_sea_or_in_port");
+        var vesselImoString = e.options[e.selectedIndex].text;
+        if (vesselImoNumber==1) {var vesselCapitaLetterlName = "COE LAURA"}
+        if (vesselImoNumber==2) {var vesselCapitaLetterlName = "COE LUISA"}
+        if (vesselImoNumber==3) {var vesselCapitaLetterlName = "OFFICE"} 
+        if (vesselImoNumber==1) {var vesselCountNumber = "52"}
+        if (vesselImoNumber==2) {var vesselCountNumber = "50"}
+        if (vesselImoNumber==3) {var vesselCountNumber = "28"}
+        /*Logic related to IMO NUMBERS END*/
+
+        /*Logic related Dates START*/
+        var dateOfIncident = document.getElementById("date_of_incident").value;
+        var yearOfReport = dateOfIncident.substring(0,4);
+        /*Logic related Dates END*/
+
+        var deficiencyReportNumber = document.getElementById("deficiency_report_number").value;
+        var voyageNo = document.getElementById("voyage_no").value;
+
+        var v = document.getElementById("at_sea_or_in_port")
         var atSeaOrInPort = v.options[v.selectedIndex].text;
-        
+       
+        /*Logic related type_of_report START*/  
         var g = document.getElementById("type_of_report");
         var typeOfReport = g.options[g.selectedIndex].text;
+        var m = document.getElementById("type_of_report");
+        var typeOfReportValue = m.options[g.selectedIndex].value;
+        if (typeOfReportValue==1) {var typeOfReportShortString = "hazocc"}  
+        if (typeOfReportValue==2) {var typeOfReportShortString = "nc"}
+        if (typeOfReportValue==3) {var typeOfReportShortString = "acc_a"}
+        if (typeOfReportValue==4) {var typeOfReportShortString = "acc_b"}  
+        if (typeOfReportValue==5) {var typeOfReportShortString = "acc_c"}
+        if (typeOfReportValue==6) {var typeOfReportShortString = "obs"}
+        if (typeOfReportValue==7) {var typeOfReportShortString = "ca"}
+        if (typeOfReportValue==8) {var typeOfReportShortString = "rec"}
+        /*Logic related type_of_report END*/ 
         
+        /*Logic related select_department START*/
         var k = document.getElementById("select_department");
         var selectedDepartment = k.options[k.selectedIndex].text;
-        
+        /*Logic related select_department END*/
+
+
+        //E: [ detailed description of incident: what did happen? ]
+        var detailedDescriptionOfIncident = document.getElementById("detailed_description_of_incident").value;
+
+        //F: [ root cause: why did it happen? ]
+        var whyDidItHappen = document.getElementById("why_did_it_happen").value;
+
+        //G: [ proposed corrective action(s): how to rectify? ]
+        var proposedCorrectiveAction = document.getElementById("proposed_corrective_action").value;
+
+
+        //H: [ proposed preventive action(s): what to do to avoid this in future? ]
+        var proposedPreventiveAction = document.getElementById("proposed_preventive_action").value;
+
+        /*Logic related Select_Signature_in_Field START*/
         var l = document.getElementById("Select_Signature_in_Field");
         var SelectSignatureInFieldValue = l.options[l.selectedIndex].value;
         var SelectSignatureInFieldText = l.options[l.selectedIndex].text;
-        var SelectSignatureInFieldSoftText = l.options[l.selectedIndex].text;
+        if (SelectSignatureInFieldValue==0) {var SelectSignatureInFieldText = "Thanks & brgds"+'\n'+"Master"}  
+        if (SelectSignatureInFieldValue!=0) {var SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText+'\n'+"Master"}
+        /*Logic related Select_Signature_in_Field END*/
 
-        var m = document.getElementById("type_of_report");
-        var typeOfReportValue = m.options[g.selectedIndex].value;
-    
-        var SelectSignatureInFieldTextSoft;
-        var SelectSignatureInFieldValue;
-//alert(typeOfReportValue);
-        
-        if (SelectSignatureInFieldValue==0) {
-            SelectSignatureInFieldText = "Thanks & brgds"+'\n'+"Master";
-            } else {SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText+'\n'+"Master";
-            //  block of code to be executed if the condition1 is false nd condition2 is false
-            };
-      if (SelectSignatureInFieldValue==0) {
-            SelectSignatureInFieldTextSoft = "Thanks  brgds"+'%0D%0A'+"Master";
-            } else {SelectSignatureInFieldTextSoft="Thanks  brgds"+"%0D%0A"+SelectSignatureInFieldSoftText+"%0D%0A"+"Master";
-            //  block of code to be executed if the condition1 is false and condition2 is false
-            };
-       
-                if (vesselImoNumber==1) {
-            var vesselCapitaLetterlName = "COE KAETHE";
-            } else if (vesselImoNumber==2) {
-             var vesselCapitaLetterlName = "COE MIEKE";
-            } else if (vesselImoNumber==3) {
-             var vesselCapitaLetterlName = "OFFICE";
-            } else {
-            //  block of code to be executed if the condition1 is false and condition2 is false
-            }
-          if (vesselImoNumber==1) {
-            var vesselCountNumber = "54";
-            } else if (vesselImoNumber==2) {
-             var vesselCountNumber = "56";
-            } else {
-            //  block of code to be executed if the condition1 is false and condition2 is false
-            }
+        var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"o/"+yearOfReport+"/"+typeOfReport
+        document.getElementById('Subject').value=subject
 
-            if (typeOfReportValue==1) {
-            var typeOfReportShortString = "hazocc";
-            } else if (typeOfReportValue==2) {
-             var typeOfReportShortString = "nc";
-            } else if (typeOfReportValue==3) {
-             var typeOfReportShortString = "acc_a";
-            } else {
-            //  block of code to be executed if the condition1 is false and condition2 is false
-            }
-
-             //alert(typeOfReportShortString);
-            // def = deficiency
-            // rec = recommendation
-            // ca = condition of authority
-            // nc = non-conformity
-            // obs = observation
-            // hazocc = hazardous occurrence
-            // acc_a = accident (risk priority A)
-            // acc_b = accident (risk priority B)
-            // acc_c = accident (risk priority C)
-
-
-        var dateOfIncident = document.getElementById("date_of_incident").value;
-        var yearOfReport = dateOfIncident.substring(0,4);
-        var deficiencyReportNumber = document.getElementById("deficiency_report_number").value;        
-        var voyageNo = document.getElementById("voyage_no").value;
-        
-        
-        
-        var detailedDescriptionOfIncident = document.getElementById("detailed_description_of_incident").value;
-        var whyDidItHappen = document.getElementById("why_did_it_happen").value;
-        var proposedCorrectiveAction = document.getElementById("proposed_corrective_action").value;
-        var proposedPreventiveAction = document.getElementById("proposed_preventive_action").value
-
-        var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"o/"+yearOfReport+"/"+typeOfReport;
-        var headOfMessage = "+++###+++   "+typeOfReport+" +++###+++";
-        var vesselImoString = e.options[e.selectedIndex].text;
-        var shipsName="Ships name: "+vesselCapitaLetterlName+" / IMO No.:"+vesselImoString;
+        var headOfMessage = "+++###+++   "+typeOfReport+" +++###+++"
+        var shipsName="Ships name: "+vesselCapitaLetterlName+" / IMO No.:"+vesselImoString
         var attentionTo="Attn: DP/CSO"+ '\n' +
                         "cc: superintendent"+ '\n' +
                         '\n' +
-                        "Dear Sir,";
+                        "Dear Sir,"
         var attentionToGmail="Attn: DP/CSO"+ '<br>' +
                         "cc: superintendent"+ '<br>' +
                         '<br>' +
                         "Dear Sir,";
-    
-        var alfa="A: "+dateOfIncident+" / voyage no: "+voyageNo; 
-        
-        var bravo="B: "+atSeaOrInPort;
-        
-        var charlie="C: "+typeOfReport;
-        
-        var delta="D: "+selectedDepartment;
-        
-        var echo="E: "+detailedDescriptionOfIncident;
-        var foxtrot="F: "+whyDidItHappen;
-        var golf="G: "+proposedCorrectiveAction;
-        var hotel="H: "+proposedPreventiveAction;
-        var alfaShort="A: "+dateOfIncident+" / Voy no: "+voyageNo; 
-        
-        
-        
-        
-        
 
+        var alfa="A: "+dateOfIncident+" / Voy no: "+voyageNo
         
+        var bravo="B: "+atSeaOrInPort
+        
+        var charlie="C: "+typeOfReport
+
+        var delta="D: "+selectedDepartment
+        
+        var echo="E: "+detailedDescriptionOfIncident
+
+        var foxtrot="F: "+whyDidItHappen
+
+        var golf="G: "+proposedCorrectiveAction
+
+        var hotel="H: "+proposedPreventiveAction
+
+        /*special for modalWindowWithEmailBody START*/
         var msgBody =    
         
         headOfMessage+ '\n' 
@@ -2209,9 +2215,8 @@ Select Signature in Field</label>
         hotel+ '\n' 
              +'\n' +
         SelectSignatureInFieldText;
-
-
- var msgBodyForGmail =    
+        /*special for modalWindowWithEmailBody END*/
+        var msgBodyForGmail =    
         
         headOfMessage+ '<br>' 
             +'<br>' +
@@ -2237,8 +2242,8 @@ Select Signature in Field</label>
              +'<br>' +
         SelectSignatureInFieldText;
 
-
- var abcde = alfaShort
+        var abcde = 
+        alfa
             +'\n' +
         bravo   
             +'\n' +
@@ -2246,257 +2251,119 @@ Select Signature in Field</label>
             +'\n' +
         delta
             +'\n' +
-        echo;   
+        echo; 
+      // Update the modal's content.
+      var modalTitle = modalWindowWithEmailBody.querySelector('.modal-title')
+      var modalBodyInput = modalWindowWithEmailBody.querySelector('.modal-body input')
 
- var attentionToSoft="Attn: DP/CSO"+ '%0D%0A' +
-                        "cc: superintendent"+ '%0D%0A' +
-                        '%0D%0A' +
-                        "Dear Sir,";
-
-            var msgBodyForSoft =    
+      modalTitle.textContent = 'New Report to ' + "incidents@navomare.eu";
+      modalBodyInput.value = "incidents@navomare.eu";     
         
-        headOfMessage+ '%0D%0A' 
-            +'%0D%0A' +
-        shipsName+ '%0D%0A' 
-            +'%0D%0A' +
-        attentionToSoft  + '%0D%0A' 
-            +'%0D%0A' +
-        alfa+ '%0D%0A' 
-            +'%0D%0A' +
-        bravo+ '%0D%0A'     
-            +'%0D%0A' +
-        charlie+ '%0D%0A' 
-            +'%0D%0A' +
-        delta+ '%0D%0A'  
-            +'%0D%0A' +
-        echo+ '%0D%0A'  
-            +'%0D%0A' +
-        foxtrot+ '%0D%0A'  
-            +'%0D%0A' +
-        golf+ '%0D%0A'  
-            +'%0D%0A' +
-        hotel+ '%0D%0A' 
-             +'%0D%0A' +
-        SelectSignatureInFieldTextSoft;
-    
-    document.getElementById('Subject').value=subject;
-    document.getElementById('message-text').value=msgBody;
 
 
-    
-
-
-  $(function () {
+      //inser info in modalWindowWithEmailBody
+     document.getElementById('message-text').value=msgBody
+     
       $('#gSheet').click(function (event) {
 
-
-// https://github.com/levinunnink/html-form-to-google-sheet         
-//start gsheet sender this array is setted by variables
-//name of the array field same like names in gsheet document
-      var formData = {
-      Def: deficiencyReportNumber+'o',
-      No: "No",
-      Year: yearOfReport,
-      Grade: typeOfReportShortString,  
-      Ship: vesselCapitaLetterlName,  
-      Description: abcde,  
-      Root: whyDidItHappen,
-      Corrective: proposedCorrectiveAction,  
-      Preventive: proposedPreventiveAction,  
-      Subject: subject,
-      MessageBody: msgBodyForGmail,  
-        
-        
-    };
-    //variables for getting result from gsheet script, success or no and number of the row added
-     var dataMy;
-     var rowMy;
+              var formData = {
+                                Def: deficiencyReportNumber+'o',
+                                No: "No",
+                                Year: yearOfReport,
+                                Grade: typeOfReportShortString,  
+                                Ship: vesselCapitaLetterlName,  
+                                Description: abcde,  
+                                Root: whyDidItHappen,
+                                Corrective: proposedCorrectiveAction,  
+                                Preventive: proposedPreventiveAction,  
+                                Subject: subject,
+                                MessageBody: msgBodyForGmail,  
+                            };
+                //variables for getting result from gsheet script, success or no and number of the row added
+                var dataMy;
+                var rowMy;
 
 
     
-$.ajax({
-      type: "POST",
-      url: "https://script.google.com/macros/s/AKfycbwF-hUp7wmAQBfeJzIkz0XTyuGx0G9zIHIDiewyeS3IHI69MZ6Cw84emcscBH6UQLT7/exec",
-      data: formData,
-      dataType: "json",
-      encode: true,
-    }).done(function (data) {
-      console.log(data);
-      var s=  document.getElementById('labelRecepient');
-      // Modal window get a message with red typing how many row added in gsheet
-      dataMy = data.result;
-      rowMy = data.row;
-      s.style.color = "red" ;
-      s.innerHTML = 'Success Upload to Server Row No. '+rowMy+' added';
-     
-        
-    });
-
-          event.preventDefault();
-
-          // https://github.com/tigrr/circle-progress
-          // var dataMy =  "succes" ; 
-          var timeSec = 1000;
-          var timeMiliSec = 100;
-          var counterMy=0;
-          const result = 60; 
-          var resultTwo = 100;    
-          var counterMyTwo = 60; 
-        
-          var circleProgressVar =   new CircleProgress('.progress');
-          circleProgressVar.max = 100;
-          circleProgressVar.textFormat = 'percent';        
-          timerOne(timeMiliSec,counterMy,result);
-          function timerOne(timeMiliSec,counterMy,result) {
-              const id = setInterval(func, timeMiliSec);
-            function func() {
-            if (counterMy == result) {
-            
-                clearInterval(id);
-           // && data != "success" && data != "error"
+                $.ajax({
+                      type: "POST",
+                      url: "https://script.google.com/macros/s/AKfycbwF-hUp7wmAQBfeJzIkz0XTyuGx0G9zIHIDiewyeS3IHI69MZ6Cw84emcscBH6UQLT7/exec",
+                      data: formData,
+                      dataType: "json",
+                      encode: true,
+                       }).done(function (data
+                        ) {
+                      console.log(data);
+                      var s=  document.getElementById('labelRecepient');
+                      // Modal window get a message with red typing how many row added in gsheet
+                      dataMy = data.result;
+                      rowMy = data.row;
+                      s.style.color = "red" ;
+                      s.innerHTML = 'Success Upload to Server Row No. '+rowMy+' added';
+                    })
 
 
+                            
+                    
+                      // https://github.com/tigrr/circle-progress
+                      var timeSec = 1000;
+                      var timeMiliSec = 100;
+                      var counterMy=0;
+                      const result = 60; 
+                      var resultTwo = 100;    
+                      var counterMyTwo = 60; 
+                    
+                      var circleProgressVar =   new CircleProgress('.progress');
+                      circleProgressVar.max = 100;
+                      circleProgressVar.textFormat = 'percent';        
+                      timerOne(timeMiliSec,counterMy,result);
+                      function timerOne(timeMiliSec,counterMy,result) {
+                        const id = setInterval(func, timeMiliSec);
+                        function func() {
+                        if (counterMy == result) {
+                        
+                            clearInterval(id);
 
+                           if(result == 60 && dataMy != 'success'){timerOne(1000,60,70)}      
+                      else if(result == 70 && dataMy != 'success'){timerOne(100,70,80)}
+                      else if(result == 80 && dataMy != 'success'){timerOne(1000,80,90)}
+                      else if(result == 90 && dataMy != 'success'){timerOne(100,90,99)}
+                      else if(dataMy == 'success'){
+                        // code below generated message on modal window Success Upload to Server ...
+                        document.getElementById('modalWindowWithCircleProgressLabel').innerHTML='Success Upload to Server Row No. '+rowMy+' added';
+                        // code below generated new type of spinner 
+                        document.getElementById("spinner").className = "spinner-grow text-success";
+                        // code below generated value 100 for circle Progress bar
+                        circleProgressVar.value  = 100 
+                                        /*time delay for reload page*/
+                                        var delayInMilliseconds = 2000; //1 second
+                                        setTimeout(function() {
+                                        //your code to be executed after 1 second
+                                        location.reload();
+                                        return false;
+                                        }, delayInMilliseconds);
 
-          
-               if(result == 60 && dataMy != 'success'){timerOne(1000,60,70)}      
-          else if(result == 70 && dataMy != 'success'){timerOne(100,70,80)}
-          else if(result == 80 && dataMy != 'success'){timerOne(1000,80,90)}
-          else if(result == 90 && dataMy != 'success'){timerOne(100,90,99)}
-          else if(dataMy == 'success'){
-            // code below generated message on modal window Success Upload to Server ...
-            document.getElementById('modalWindowWithCircleProgressLabel').innerHTML='Success Upload to Server Row No. '+rowMy+' added';
-            // code below generated new type of spinner 
-            document.getElementById("spinner").className = "spinner-grow text-success";
-            // code below generated value 100 for circle Progress bar
-            circleProgressVar.value  = 100;
-            // start generate message in outlook
-            var email = 'incidents@navomare.eu';
-            var emailBody = msgBodyForSoft;
-            var attach = 'path';
-            /*
-             * this listener below is reloaded page on focus lost 
-             */
-            window.addEventListener('blur', function(){     
-            document.location.reload(); 
-            console.log('leave');
-            });
-            // document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody;
-           
-                                       } 
-
-
-            else if(dataMy != 'success'){
-            document.getElementById('modalWindowWithCircleProgressLabel').innerHTML='Error Upload to Server 0 Rows added check you internet connection';
-            // code below generated new type of spinner danger
-            document.getElementById("spinner").className = "spinner-grow text-danger";
-            // start generate message in outlook
-            var email = 'incidents@navomare.eu';
-            var emailBody = msgBodyForSoft;
-            var attach = 'path';
-            /*
-             * this listener below is reloaded page on focus lost 
-             */
-            window.addEventListener('blur', function(){     
-            document.location.reload(); 
-            console.log('leave');
-            });
-            // document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody; 
-                                        }
-            }
-            else  {
-            counterMy++;  
-      
-            circleProgressVar.value  = counterMy;
+                         }
+                        else if(dataMy != 'success'){
+                        document.getElementById('modalWindowWithCircleProgressLabel').innerHTML='Error Upload to Server 0 Rows added check you internet connection';
+                        // code below generated new type of spinner danger
+                        document.getElementById("spinner").className = "spinner-grow text-danger";
+                         }
+                        }
+                        else  {
+                        counterMy++;  
+                  
+                        circleProgressVar.value  = counterMy;
               }      
              }
             }
-        
-          
-}) });
-   
-   
-   
-   
-   
- //even click send var to outlook
-    $(function () {
-      $('#btnEmailSoft').bind('click keyup',function (event) {
-        
+
+                                                })
 
 
-          
-//start gsheet sender
-      var formData = {
-      Def: deficiencyReportNumber+'o',
-      No: "No",
-      Year: yearOfReport,
-      Grade: typeOfReportShortString,  
-      Ship: vesselCapitaLetterlName,  
-      Description: abcde,  
-      Root: foxtrot,
-      Corrective: proposedCorrectiveAction,  
-      Preventive: hotel,  
-      Subject: subject,
-      MessageBody: msgBodyForGmail,  
-
-        
-        
-    };
-    
-     
-    
-$.ajax({
-      type: "POST",
-      url: "https://script.google.com/macros/s/AKfycbwF-hUp7wmAQBfeJzIkz0XTyuGx0G9zIHIDiewyeS3IHI69MZ6Cw84emcscBH6UQLT7/exec",
-      data: formData,
-      dataType: "json",
-      encode: true,
-    }).done(function (data) {
-      console.log(data);
-      // Modal window get a message with red typing how many row added in gsheet
-      var s=  document.getElementById('labelRecepient');
-      s.style.color = "red" ;
-      s.innerHTML = data.result+data.row;
-
-
-        var email = 'incidents@navomare.eu';
-       
-        var emailBody = msgBodyForSoft;
-        var attach = 'path';
-        // document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody;
-    });
-
-          event.preventDefault();
-
-       
-      });
-    });
-//end gsheet send
-
-
-
-  // Button that triggered the moda
-  var button = event.relatedTarget
-
-  // Extract info from data-bs-* attributes
-  var recipient = button.getAttribute('data-bs-whatever')
- 
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
-  var modalTitle = modalWindowWithEmailBody.querySelector('.modal-title')
-  var modalBodyInput = modalWindowWithEmailBody.querySelector('.modal-body input')
-
-  modalTitle.textContent = 'New Report to ' + "incidents@navomare.eu";
-  modalBodyInput.value = "incidents@navomare.eu";     
-        
-            
     })
 
 
-    
     </script>
     
 
