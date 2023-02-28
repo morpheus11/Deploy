@@ -1,6 +1,16 @@
 <!doctype html><!--  -->
 <html lang="en">
   <head>
+<script type="text/javascript">
+let versionNumber = "7.3";
+document.title = 'NavoMare REPORTING ver.'+versionNumber;
+// 1edTX9YFRHPIUGxWJzoKded_9x0w4FrXwgEoLNMuLUfQ @bd
+// 1jHKkUwXHU7x38naaSkYLNiefPfLVUIRrXOAHjEXc9IA @nm
+let sheetIncidentId = '1jHKkUwXHU7x38naaSkYLNiefPfLVUIRrXOAHjEXc9IA';
+let domenCalled = '@nm';
+const scriptHashGetValue = 'AKfycbybCA6Ri82KIhu1HJsFsoCb2e29IVChrVzQjCHC8OpsZ4fzF_nSOfgICvTfGw27BZGZ';
+const scriptHashSetValue = 'AKfycbw49IK2rvhVoVQFP3T7BGyCs6-hKt4y-wTYGCGMsLqsbJ5_fmiW5aQNgjbCt8aKGtxF';
+</script>
 	<!-- FilePondPluginFileEncode 2.1.10 -->
     <script>
         /*!
@@ -16214,7 +16224,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     })
 </script>
 <!-- Datepicker for js Bootstrap end-->
-    <title>NavoMare REPORTING ver.7.2</title>
+    <title></title>
 
   </head>
 <!-- Background image world start-->
@@ -16292,7 +16302,11 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                                             <!-- bg-dark deleted -->
 <nav class="navbar navbar-expand-md navbar-dark " aria-label="Fourth navbar example">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Reporting ver.7.2</a>
+      <a class="navbar-brand" id="navbarBrand" href="#"></a>
+      <script type="text/javascript">
+        document.getElementById("navbarBrand").innerHTML="Reporting ver."+versionNumber
+
+      </script>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -16303,26 +16317,18 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="/zip/nm_ver.7.2.zip">Download ZIP</a>
+            <a class="nav-link" id="myZipLink" href="#">Download ZIP</a>
+                     
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link disabled">Disabled</a>
           </li> -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">File</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Open Report...</a></li>
-              <li><a class="dropdown-item" href="#">Report Save as...</a></li>
-              <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-            </ul>
-          </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="https://docs.google.com/spreadsheets/d/1jHKkUwXHU7x38naaSkYLNiefPfLVUIRrXOAHjEXc9IA">CAPA</a>
+            <a class="nav-link" id="sheetIncidentId" href="">CAPA</a>
           </li>
         </ul>
-        <form role="search">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-        </form>
+ 
       </div>
     </div>
   </nav>
@@ -16332,22 +16338,21 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     <div class="row">
         <div class="col-sm-4"></div>
         <!--background gradient -->
-  <div class="col-sm-4" style="background-image: linear-gradient(to bottom, #0e2a47, #1c538e, #00849e, #00bb80, #54eb12); border-radius: 5px">
+  <div class="col-sm-4" style="background-image: linear-gradient(to bottom, #ffffff, #1c538e, #00849e, #00bb80, #54eb12);border-radius: 5px">
   <div class="mb-3" >
   <div id="svg" >
   <!-- Background image Navomare logo start-->
-  <img src="data:image/webp;base64,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" >
+  <img id="logoImg"src=""style="
+  padding-top: 10px;
+">
    <!-- Background image Navomare logo end-->
 </div>
    
  </div>         
             
 <div class="mb-3">
-     <select class="form-select" id="Veesel_IMO_number" aria-label="Default select example">
-          <option selected>Please select Vessel IMO number</option>
-          <option value="1">9343821</option>
-          <option value="2">9435026</option>
-          <option value="3">5879953</option>
+     <select class="form-select" id="Veesel_IMO_number" onchange="getDefNumber()"  style="background-color: #9ce391;" aria-label="Default select example">
+        <option value="" disabled selected>loading...wait...</option>
      </select>
  </div>
 <div class="mb-3">
@@ -16360,7 +16365,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 </div>
 <div class="mb-3">
 <label for="deficiency_report_number" class="form-label">A: [ Deficiency report number ]</label>
-    <input type="text" class="form-control" id="deficiency_report_number"  placeholder="XXXXX" >
+    <input type="text" class="form-control" id="deficiency_report_number" readonly="readonly" placeholder="loading..." style="background-color: #9ce391;">
                 </div>
 <div class="mb-3">
 <label for="voyage_no" class="form-label">A: [ voyage no: XXXX ]</label>
@@ -16464,7 +16469,68 @@ Select Signature in Field</label>
 </div>
 
    
+            <script>
+              var dataDef = [];
+                window.onload = function() {
+
+                   
+                    
+     $.ajax(
+                {
+                  type:'GET',
+                  url:'https://script.google.com/macros/s/'+scriptHashGetValue+'/exec',
+                  data:{domenCalled:domenCalled,sheetIncidentId:sheetIncidentId},
+                  error: function(xhr, status, error) {
+  var err = eval("(" + xhr.responseText + ")");
+ 
+  let m = document.getElementById("deficiency_report_number")
+  m.style.backgroundColor = "#ff0000";
+  m.style.color = "white";
+  m.value = "check your internet connect";
+  var delayInMilliseconds = 2000; //1 second
+                                        setTimeout(function() {
+                                        //your code to be executed after 1 second
+                                        location.reload();
+                                        return false;
+                                        }, delayInMilliseconds);
+},
+                  success: function(data){
+                    console.table(data);
+                    console.log(data.length);
+                   dataDef = data;
+
+                   for (var i = 0; i < dataDef.vesselStatic.vesselData.length; i++) {
+                   // let newOption = new Option('COE LUISA','50');
+                    let newOption = new Option(dataDef.vesselStatic.vesselData[i][0],dataDef.vesselStatic.vesselData[i][1]);
+                    const select = document.getElementById('Veesel_IMO_number');
+                    select.add(newOption,undefined);
+                      
+                    }
+
+                   var r = document.getElementById("Veesel_IMO_number");
+                   r.remove(r.selectedIndex);
+                   r.style.backgroundColor = "#e9ecef";
         
+        var vesselImoString = r.options[r.selectedIndex].text;
+                   if (vesselImoString=="Please select Vessel IMO number") {
+          
+          let m = document.getElementById("deficiency_report_number")
+          m.style.backgroundColor = "#00ff00";
+          m.style.color = "black";
+          m.value = "Please select IMO number";
+          
+          // $('#deficiency_report_number').prop('readonly', false);
+        }
+                   getDefNumber();
+                   document.title = 'connected REPORTING ver.'+versionNumber;
+                      }
+
+                      
+                    
+          })
+        }
+      
+    </script>
             
         
       
@@ -16537,6 +16603,42 @@ Select Signature in Field</label>
         var attentionToGmail
         var msgBodyForGmail
 
+
+           function getDefNumber(){
+          
+         var e = document.getElementById("Veesel_IMO_number");
+         var vesselImoString = e.options[e.selectedIndex].text;
+
+       
+          
+        for (var i = 0; i < dataDef.arrayNewItemDef.length; i++) {
+            // dataDef.arrayNewItemDef[i][0] = 'COE LENI'
+            if (dataDef.arrayNewItemDef[i][0].toUpperCase()==vesselImoString){
+                
+                for (var t = 0; t < dataDef.vesselStatic.vesselData.length; t++){
+                    if (dataDef.arrayNewItemDef[i][0].toUpperCase()==dataDef.vesselStatic.vesselData[t][0]){
+                        vesselImoNumber = dataDef.vesselStatic.vesselData[t][2];
+                vesselCapitaLetterlName = dataDef.vesselStatic.vesselData[t][0];
+                vesselCountNumber = dataDef.vesselStatic.vesselData[t][1];
+                    }
+                }
+
+
+              let m = document.getElementById("deficiency_report_number")
+              m.value = vesselCountNumber+"-"+dataDef.arrayNewItemDef[i][1];
+              m.style.backgroundColor = "#e9ecef";
+              document.getElementById("logoImg").src="https://reporting.navomare.eu/img/"+dataDef.vesselStatic.emailIncident[0][0]+".png";
+              document.getElementById("sheetIncidentId").href = 'https://docs.google.com/spreadsheets/d/'+dataDef.vesselStatic.sheetIncidentId[0][0];
+              document.getElementById("myZipLink").setAttribute("href", "https://reporting.navomare.eu/"+dataDef.vesselStatic.emailIncident[0][0]+versionNumber+".zip");
+            
+        
+            }
+          }  
+          
+          
+
+        }
+
         /*filepond post to google script*/
         var fileName;
         var filetype;
@@ -16585,17 +16687,17 @@ Select Signature in Field</label>
         modalWindowWithEmailBody.addEventListener('show.bs.modal', function (event) {
 
         /*Logic related to IMO NUMBERS START*/
-        var e = document.getElementById("Veesel_IMO_number");
-        var vesselImoNumber = e.options[e.selectedIndex].value;
-        var vesselImoString = e.options[e.selectedIndex].text;
-        if (vesselImoNumber==1) {var vesselCapitaLetterlName = "COE LAURA"}
-        if (vesselImoNumber==2) {var vesselCapitaLetterlName = "COE LUISA"}
-        if (vesselImoNumber==3) {var vesselCapitaLetterlName = "OFFICE"} 
-        if (vesselImoNumber==1) {var vesselCountNumber = "52"}
-        if (vesselImoNumber==2) {var vesselCountNumber = "50"}
-        if (vesselImoNumber==3) {var vesselCountNumber = "28"}
+        // var e = document.getElementById("Veesel_IMO_number");
+        // var vesselImoNumber = e.options[e.selectedIndex].value;
+        // var vesselImoString = e.options[e.selectedIndex].text;
+        // if (vesselImoNumber==1) {var vesselCapitaLetterlName = "COE LAURA"}
+        // if (vesselImoNumber==2) {var vesselCapitaLetterlName = "COE LUISA"}
+        // if (vesselImoNumber==3) {var vesselCapitaLetterlName = "OFFICE"} 
+        // if (vesselImoNumber==1) {var vesselCountNumber = "52"}
+        // if (vesselImoNumber==2) {var vesselCountNumber = "50"}
+        // if (vesselImoNumber==3) {var vesselCountNumber = "28"}
         /*Logic related to IMO NUMBERS END*/
-
+      
         /*Logic related Dates START*/
         var dateOfIncident = document.getElementById("date_of_incident").value;
         var yearOfReport = dateOfIncident.substring(0,4);
@@ -16641,7 +16743,7 @@ Select Signature in Field</label>
         // The substituted value will be contained in the result variable
         const resultregexfordashes = strregexfordashes.replace(regexfordashes, substregexfordashes);
 
-        var strforatt = resultregexfordashes+"-"+typeOfReportShortString+"_"+deficiencyReportNumber+"_imo_"+vesselImoString;
+        var strforatt = resultregexfordashes+"-"+typeOfReportShortString+"_"+deficiencyReportNumber+"_imo_"+vesselImoNumber;
 
         console.log('Substitution result: ',strforatt );
         /*This we will generate string for attachment name end*/
@@ -16674,9 +16776,10 @@ Select Signature in Field</label>
         var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport
 
         document.getElementById('Subject').value=subject
+        document.getElementById('recipient-name').value=dataDef.vesselStatic.emailIncident[0][0]
 
         var headOfMessage = "+++###+++   "+typeOfReport+" +++###+++"
-        var shipsName="Ships name: "+vesselCapitaLetterlName+" / IMO No.:"+vesselImoString
+        var shipsName="Ships name: "+vesselCapitaLetterlName+" / IMO No.:"+vesselImoNumber
         var attentionTo="Attn: DP/CSO"+ '\n' +
                         "cc: superintendent"+ '\n' +
                         '\n' +
@@ -16727,7 +16830,9 @@ Select Signature in Field</label>
             +'\n' +
         hotel+ '\n' 
              +'\n' +
-        SelectSignatureInFieldText;
+        SelectSignatureInFieldText+ '\n' 
+             +'\n' +
+        "ver."+versionNumber;
         /*special for modalWindowWithEmailBody END*/
         var msgBodyForGmail =    
         
@@ -16753,7 +16858,9 @@ Select Signature in Field</label>
             +'<br>' +
         hotel+ '<br>' 
              +'<br>' +
-        SelectSignatureInFieldText;
+        SelectSignatureInFieldText+ '<br>' 
+             +'<br>' +
+"ver."+versionNumber;
 
         var abcde = 
         alfa
@@ -16769,8 +16876,8 @@ Select Signature in Field</label>
       var modalTitle = modalWindowWithEmailBody.querySelector('.modal-title')
       var modalBodyInput = modalWindowWithEmailBody.querySelector('.modal-body input')
 
-      modalTitle.textContent = 'New Report to ' + "incidents@navomare.eu";
-      modalBodyInput.value = "incidents@navomare.eu";     
+      modalTitle.textContent = 'New Report to ' + dataDef.vesselStatic.emailIncident[0][0];
+      modalBodyInput.value = dataDef.vesselStatic.emailIncident[0][0];     
         
 
 
@@ -16795,7 +16902,10 @@ Select Signature in Field</label>
                                 MessageBody: msgBodyForGmail,
                                 filedata: base64String,
                                 filename: strforatt+"."+fileExte,
-                                filetype: filetype,  
+                                filetype: filetype,
+                                sheetIncidentId:dataDef.vesselStatic.sheetIncidentId[0][0],
+                                cloudFolderIncidentId:dataDef.vesselStatic.cloudFolderIncidentId[0][0],
+                                emailIncident:dataDef.vesselStatic.emailIncident[0][0],  
                             };
                 //variables for getting result from gsheet script, success or no and number of the row added
                 var dataMy;
@@ -16805,7 +16915,7 @@ Select Signature in Field</label>
     
                 $.ajax({
                       type: "POST",
-                      url: "https://script.google.com/macros/s/AKfycbyqSwRhIswLNyZ4DA-XNffZCp6F51i3KVNA2mHBvs5WMBVUujdB1fFewwKjPrDlUug5/exec",
+                      url: 'https://script.google.com/macros/s/'+scriptHashSetValue+'/exec',
                       data: formData,
                       dataType: "json",
                       encode: true,
