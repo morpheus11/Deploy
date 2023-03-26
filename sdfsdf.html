@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<script>
+class ClassCreateElements {
+  constructor(jsonObj) {
+    this.defJSON = jsonObj;
+  }
+
+  createElementsForm() {
+    const formDiv = document.createElement("div");
+    for (const key in this.defJSON) {
+      const div = this.createElementsOfForm(key, this.defJSON[key]);
+      formDiv.appendChild(div);
+    }
+    return formDiv;
+  }
+
+  createElementsOfForm(key, value) {
+    const div = document.createElement("div");
+    div.classList.add("mb-3");
+
+    const label = document.createElement("label");
+    label.setAttribute("for", key);
+    label.setAttribute("id", "label_" + key);
+    label.classList.add("form-label");
+    label.textContent = key;
+    div.appendChild(label);
+
+    const textarea = document.createElement("textarea");
+    textarea.setAttribute("id", key);
+    textarea.setAttribute("rows", "4");
+    textarea.setAttribute("style", "height: 85px;");
+    textarea.classList.add("form-control");
+    textarea.textContent = value;
+    div.appendChild(textarea);
+
+    return div;
+  }
+} 
+
+const jsonObj = {"Def":"50-23002","Year":2023,"Grade":"nc","Type":"ism9","Q":"Q1","PI":"c","Ship":"COE LUISA","Res.":"Crew","Description":"A: 2023-01-15 / Voy no: 2302\nB: At Sea\nC: NON-CONFORMITY\nD: Deck\nE: During rescue boat drill we found damage of the lifting wire","Root":"Root Cause:\nThe hoisting wire of RB jumped off sheave and stuck\n\nImmediate/ Direct Causes:\nFailure to warn / Using equipment Improperly / Failure to check\n\nBasic/Underlying Causes: \nInadequate Supervision / Inadequate Communications\n","Corrective":"issued req_195/2022 & replace wire after delivery by crew","Preventive":"n/a","":"","DP-0201":"Closed"};
+
+const createElements = new ClassCreateElements(jsonObj);
+const formDiv = createElements.createElementsForm();
+document.body.appendChild(formDiv);
+</script>
+</body>
+</html>
