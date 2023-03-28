@@ -16600,7 +16600,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                                  vesselDataCore = JSON.parse(atob(substrings[1]))
                                 for (const key in vesselDataCore) {
                                         if (vesselDataCore.hasOwnProperty(key)) {
-                                            localStorage.setItem(key, vesselDataCore[key]);
+                                            sessionStorage.setItem(key, vesselDataCore[key]);
                                         }
                                     }
                                 authorizationDone();
@@ -16636,10 +16636,17 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
         document.getElementById('dropDownVesselName').innerHTML = vesselDataCore.mainData;
         document.getElementById('dropDownCompanyName').innerHTML = vesselDataCore.companyName;
         document.getElementById('dropDownimoShipNumber').innerHTML = vesselDataCore.imoShipNumber;
+        document.getElementById('Veesel_IMO_number').value = vesselDataCore.mainData;
+        document.getElementById('deficiency_report_number').value = vesselDataCore.singleDefa;
+        document.getElementById("sheetIncidentId").href = 'https://docs.google.com/spreadsheets/d/'+vesselDataCore.sheetIncidentId;
+        document.getElementById("myZipLink").setAttribute("href", "https://reporting.navomare.eu/"+vesselDataCore.emailIncident+versionNumber+".zip");
+        document.getElementById('recipient-name').value=vesselDataCore.emailIncident;
+        
+        
 
     };
     function authorizationLogout(){
-        localStorage.clear();
+        sessionStorage.clear();
         
         document.getElementById('logon').setAttribute("style", "display: block;");
         document.getElementById('page1').setAttribute("style", "display: none;");
@@ -16695,11 +16702,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
      }
    }
 
-                var funcGetVesselName =  function () { 
-                    var y = document.getElementById("Veesel_IMO_number");
-                    var vesselName = y.options[y.selectedIndex].text;
-                    return vesselName; 
-                };  
+                
                 
                 let modal1 = new MyModal(
                             "myModalId1",
@@ -16711,10 +16714,10 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                             
                     function modalServerAsk(){
                             let p = document.getElementById(modal1.modalIdButton);
-                            p.innerHTML = modal1.modalButtonText+funcGetVesselName();
+                            p.innerHTML = modal1.modalButtonText+vesselDataCore.mainData;
 
                             let a = document.getElementById(modal1.modalIdBody);
-                            a.innerHTML = modal1.bodyText+funcGetVesselName()+" is proper selected vessel";
+                            a.innerHTML = modal1.bodyText+vesselDataCore.mainData+" is proper selected vessel";
                             var myModal = new bootstrap.Modal(document.getElementById('myModalId1'))
                             
                             myModal.show()
@@ -16722,7 +16725,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                 }
                    
             </script>
-            <a class="nav-link" id="sheetIncidentId" href="#" onclick="modalServerAsk()">FOLLOW UP!</a>
+            <a class="nav-link" id="buttonFollowUP" href="#" onclick="modalServerAsk()">FOLLOW UP!</a>
             <script>
                   
                 let trigger_inst_do_call_send_followup = 'open';
@@ -16730,7 +16733,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                 function sendFollowup(){
                     let followUpFormData = {
                     callBack:'followUpReport',    
-                    vesselName:funcGetVesselName(),
+                    vesselName:vesselDataCore.mainData,
                     dateFollowUp:document.getElementById('date_of_incident').value,    
                     defReportNumber:document.getElementById('select_deficiency_report_number').options[document.getElementById('select_deficiency_report_number').selectedIndex].text,
                     followUpStatus:document.getElementById('select_followUp_or_closing').options[document.getElementById('select_followUp_or_closing').selectedIndex].text,
@@ -16739,9 +16742,9 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     filedata: base64String,
                     filename: 'sabininaMama'+"."+fileExte,
                     filetype: filetype,
-                    sheetIncidentId:dataDef.vesselStatic.sheetIncidentId[0][0],
-                    cloudFolderIncidentId:dataDef.vesselStatic.cloudFolderIncidentId[0][0],
-                    emailIncident:dataDef.vesselStatic.emailIncident[0][0],
+                    sheetIncidentId:vesselDataCore.sheetIncidentId,
+                    cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
+                    emailIncident:vesselDataCore.emailIncident,
                     version:versionNumber,
                 };
                     console.log(followUpFormData);
@@ -16777,6 +16780,53 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                         );  
                     }
                 };
+                function showReporting(){
+                    let objectToShow = [
+                        "Veesel_IMO_number",
+                        "voyage_no",
+                        "label_voyage_no",
+                        "at_sea_or_in_port",
+                        "label_at_sea_or_in_port",
+                        "select_department",
+                        "label_select_department",
+                        "deficiency_report_number",
+                        "type_of_report",
+                        "label_date_of_incident",
+                        
+                        "label_why_did_it_happen",
+                        "why_did_it_happen",
+                        "label_proposed_corrective_action",
+                        "proposed_corrective_action",
+                        "proposed_preventive_action",
+                        "label_proposed_preventive_action",
+                        "buttonPreview",
+                    ];
+
+                    let objectToHide = [
+                   
+                    "select_followUp_or_closing",
+                    "select_deficiency_report_number",
+                    "btnRequestAddInfo",
+                    "label_date_of_follow-up",
+                    "follow_up_description_remarks",
+                    "label_follow_up_description_remarks",
+                    ];
+
+                    for(let i = 0;i<objectToHide.length;i++){
+                       document.getElementById(objectToHide[i]).style = "display:none"
+                    }
+                    for(let i = 0;i<objectToShow.length;i++){
+                       document.getElementById(objectToShow[i]).style = "display:block;"
+                    }
+                    document.getElementById("detailed_description_of_incident").style = 'background-color: #ffffff;'
+                    document.getElementById("detailed_description_of_incident").readOnly = false;
+                    document.getElementById("detailed_description_of_incident").value = "";
+                    document.getElementById("buttonFollowUP").innerHTML = 'FOLLOW UP' ;
+                    document.getElementById("buttonlol").remove() ;
+                    document.getElementById("buttonPreview").style = 'width:100%;'
+                    
+                    document.getElementById("buttonFollowUP").setAttribute('onclick','modalServerAsk()')
+                }
                 function followUP(){
                  
                     $('#myModalId1').modal('hide');
@@ -16791,8 +16841,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                         "deficiency_report_number",
                         "type_of_report",
                         "label_date_of_incident",
-                        // "label_detailed_description_of_incident",
-                        // "detailed_description_of_incident",
+                        
                         "label_why_did_it_happen",
                         "why_did_it_happen",
                         "label_proposed_corrective_action",
@@ -16828,6 +16877,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     document.getElementById("btnRequestAddInfo").style = "width: 100%" ;
                     document.getElementById("detailed_description_of_incident").style = 'background-color: rgb(129, 187, 245);'
                     document.getElementById("detailed_description_of_incident").setAttribute("readonly", "readonly");
+                    document.getElementById("buttonFollowUP").innerHTML = 'REPORTING' ;
+                    document.getElementById("buttonFollowUP").setAttribute('onclick','showReporting()')
                     // <textarea class="form-control" id="detailed_description_of_incident" rows="4" style="height: 229px; background-color: rgb(129, 187, 245);"></textarea>
 
                                             const e = {
@@ -16853,17 +16904,18 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                         let inst_do_call_for_element_deficiency_report_numbera = new ClassAjaxCall(
                             e.parameter.success,
                             e.parameter.error,
-                            'https://script.google.com/macros/s/'+scriptOfOpenDeficiency+'/exec?',
+                            'https://script.google.com/macros/s/'+vesselDataCore.scriptIncident+'/exec?',
                             {
-                                vesselName:funcGetVesselName(),
-                                spreadsheetId:sheetIncidentId,
-                                spreadsheetName:"DP-0201_summary"
+                                callBack:'followUpGetData',
+                                vesselName:vesselDataCore.mainData,
+                                spreadsheetId:vesselDataCore.sheetIncidentId,
+                                spreadsheetName: vesselDataCore.spreadsheetName,
                             }
                         );
                         
                     //  myGet = new GetMethodCall()
                     //  myGet.scriptHashGetValue = scriptOfOpenDeficiency;
-                    //  myGet.formData = {vesselName:funcGetVesselName(),spreadsheetId:sheetIncidentId,spreadsheetName:"DP-0201_summary"};
+                    //  myGet.formData = {vesselName:vesselDataCore.mainData,spreadsheetId:sheetIncidentId,spreadsheetName:"DP-0201_summary"};
                     //  myGet.selectElement = 'select_deficiency_report_number';
                     //  myGet.textArea = 'detailed_description_of_incident';
                     //  myGet.propOfReturnObject = 'followUpGetData';
@@ -16929,9 +16981,9 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
 <div class="container" style="padding-top: 5px;padding-bottom:10px">
     <div id="page1" class="row" style="display: none">
-        <div class="col-sm-4"></div>
+        <div class="col"></div>
         <!--background gradient -->
-  <div class="col-sm-4" id="background_of_main_column_for_fields" style="background-image: linear-gradient(to bottom, #ffffff, #1c538e, #00849e, #00bb80, #54eb12);border-radius: 5px">
+  <div class="col-sm-12 col-md-8 col-lg-6 col-xl-5" id="background_of_main_column_for_fields" style="background-image: linear-gradient(to bottom, #ffffff, #1c538e, #00849e, #00bb80, #54eb12);border-radius: 5px">
   <div class="mb-3" >
   <div id="svg" >
   <!-- Background image Navomare logo start-->
@@ -16944,9 +16996,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
  </div>         
             
 <div class="mb-3">
-     <select class="form-select" id="Veesel_IMO_number" onchange="getDefNumber()"  style="background-color: #9ce391;" aria-label="Default select example">
-        <option value="" disabled selected>loading...wait...</option>
-     </select>
+    <input type="text" class="form-control" id="Veesel_IMO_number" readonly="readonly">
 
  </div>
 <div class="mb-3">
@@ -16961,11 +17011,11 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 </div>
 <div class="mb-3">
 <label for="deficiency_report_number" class="form-label">A: [ Deficiency report number ]</label>
-    <input type="text" class="form-control" id="deficiency_report_number" readonly="readonly" placeholder="loading..." style="background-color: #9ce391;">
+<input type="text" class="form-control" id="deficiency_report_number" readonly="readonly">
+
     <select class="form-select" id="select_deficiency_report_number" onchange="instance_ClassSelectElementDoParse.triggeredOnChangeSelectElement(instance_ClassSelectElementDoParse.myArray,instance_ClassSelectElementDoParse.selectElement,instance_ClassSelectElementDoParse.textArea,1,3)" aria-label="Default select example" style="display: none;">
         <option value="" disabled selected>loading...wait...</option>       
    </select>
-
                 </div>
                 <div class="mb-3">
                     <button id="btnRequestAddInfo" type="button" class="btn btn-primary"  onclick="callFinderDefSpecific('select_deficiency_report_number')" style="
@@ -17135,7 +17185,7 @@ Select Signature in Field</label>
     </div>  
         
         
-        <div class="col-sm-4"></div>
+        <div class="col"></div>
    
 </div>
 <div id="logon" style="display:none"class="row">
@@ -17214,7 +17264,7 @@ Select Signature in Field</label>
 
 
 
-              var dataDef = [];
+              
                 window.onload = function() {
                    
                     // loop through all the items in the local storage
@@ -17229,59 +17279,7 @@ Select Signature in Field</label>
 
                   
                     
-     $.ajax(
-                {
-                  type:'GET',
-                  url:'https://script.google.com/macros/s/'+scriptHashGetValue+'/exec',
-                  data:{domenCalled:domenCalled,sheetIncidentId:sheetIncidentId},
-                  error: function(xhr, status, error) {
-  var err = eval("(" + xhr.responseText + ")");
- 
-  let m = document.getElementById("deficiency_report_number")
-  m.style.backgroundColor = "#ff0000";
-  m.style.color = "white";
-  m.value = "check your internet connect";
-  var delayInMilliseconds = 2000; //1 second
-                                        setTimeout(function() {
-                                        //your code to be executed after 1 second
-                                        location.reload();
-                                        return false;
-                                        }, delayInMilliseconds);
-},
-                  success: function(data){
-                    console.table(data);
-                    console.log(data.length);
-                   dataDef = data;
-
-                   for (var i = 0; i < dataDef.vesselStatic.vesselData.length; i++) {
-                   // let newOption = new Option('COE LUISA','50');
-                    let newOption = new Option(dataDef.vesselStatic.vesselData[i][0],dataDef.vesselStatic.vesselData[i][1]);
-                    const select = document.getElementById('Veesel_IMO_number');
-                    select.add(newOption,undefined);
-                      
-                    }
-
-                   var r = document.getElementById("Veesel_IMO_number");
-                   r.remove(r.selectedIndex);
-                   r.style.backgroundColor = "#e9ecef";
-        
-        var vesselImoString = r.options[r.selectedIndex].text;
-                   if (vesselImoString=="Please select Vessel IMO number") {
-          
-          let m = document.getElementById("deficiency_report_number")
-          m.style.backgroundColor = "#00ff00";
-          m.style.color = "black";
-          m.value = "Please select IMO number";
-          
-          // $('#deficiency_report_number').prop('readonly', false);
-        }
-                   getDefNumber();
-                   document.title = 'connected REPORTING ver.'+versionNumber;
-                      }
-
-                      
-                    
-          })
+     
         }
       
     </script>
@@ -17358,40 +17356,32 @@ Select Signature in Field</label>
         var msgBodyForGmail
 
 
-           function getDefNumber(){
+        //    function getDefNumber(){
           
-         var e = document.getElementById("Veesel_IMO_number");
-         var vesselImoString = e.options[e.selectedIndex].text;
+        //  var e = document.getElementById("Veesel_IMO_number");
+        //  var vesselImoString = e.options[e.selectedIndex].text;
 
        
           
-        for (var i = 0; i < dataDef.arrayNewItemDef.length; i++) {
-            // dataDef.arrayNewItemDef[i][0] = 'COE LENI'
-            if (dataDef.arrayNewItemDef[i][0].toUpperCase()==vesselImoString){
+        //  vesselImoNumber = vesselDataCore.imoShipNumber;
+        //         vesselCapitaLetterlName = vesselDataCore.mainData;
                 
-                for (var t = 0; t < dataDef.vesselStatic.vesselData.length; t++){
-                    if (dataDef.arrayNewItemDef[i][0].toUpperCase()==dataDef.vesselStatic.vesselData[t][0]){
-                        vesselImoNumber = dataDef.vesselStatic.vesselData[t][2];
-                vesselCapitaLetterlName = dataDef.vesselStatic.vesselData[t][0];
-                vesselCountNumber = dataDef.vesselStatic.vesselData[t][1];
-                    }
-                }
+                
 
-
-              let m = document.getElementById("deficiency_report_number")
-              m.value = vesselCountNumber+"-"+dataDef.arrayNewItemDef[i][1];
-              m.style.backgroundColor = "#e9ecef";
+        //       let m = document.getElementById("deficiency_report_number")
+        //       m.value = vesselDataCore.shipNumber+"-"+"dataDef.arrayNewItemDef[i][1]";
+        //       m.style.backgroundColor = "#e9ecef";
               
-              document.getElementById("sheetIncidentId").href = 'https://docs.google.com/spreadsheets/d/'+dataDef.vesselStatic.sheetIncidentId[0][0];
-              document.getElementById("myZipLink").setAttribute("href", "https://reporting.navomare.eu/"+dataDef.vesselStatic.emailIncident[0][0]+versionNumber+".zip");
+        //       document.getElementById("sheetIncidentId").href = 'https://docs.google.com/spreadsheets/d/'+vesselDataCore.sheetIncidentId;
+        //       document.getElementById("myZipLink").setAttribute("href", "https://reporting.navomare.eu/"+vesselDataCore.emailIncident+versionNumber+".zip");
             
         
-            }
-          }  
+        //     }
+          
           
           
 
-        }
+        
 
         /*filepond post to google script*/
         var fileName;
@@ -17440,17 +17430,7 @@ Select Signature in Field</label>
         var modalWindowWithEmailBody = document.getElementById('modalWindowWithEmailBody')
         modalWindowWithEmailBody.addEventListener('show.bs.modal', function (event) {
 
-        /*Logic related to IMO NUMBERS START*/
-        // var e = document.getElementById("Veesel_IMO_number");
-        // var vesselImoNumber = e.options[e.selectedIndex].value;
-        // var vesselImoString = e.options[e.selectedIndex].text;
-        // if (vesselImoNumber==1) {var vesselCapitaLetterlName = "COE LAURA"}
-        // if (vesselImoNumber==2) {var vesselCapitaLetterlName = "COE LUISA"}
-        // if (vesselImoNumber==3) {var vesselCapitaLetterlName = "OFFICE"} 
-        // if (vesselImoNumber==1) {var vesselCountNumber = "52"}
-        // if (vesselImoNumber==2) {var vesselCountNumber = "50"}
-        // if (vesselImoNumber==3) {var vesselCountNumber = "28"}
-        /*Logic related to IMO NUMBERS END*/
+
       
         /*Logic related Dates START*/
         var dateOfIncident = document.getElementById("date_of_incident").value;
@@ -17527,13 +17507,13 @@ Select Signature in Field</label>
         var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"o/"+yearOfReport+"/"+typeOfReport*/
 
 
-        var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport
+        var subject ="//"+vesselDataCore.shipNumber+"/"+vesselDataCore.mainData+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport
 
-        document.getElementById('Subject').value=subject
-        document.getElementById('recipient-name').value=dataDef.vesselStatic.emailIncident[0][0]
+        document.getElementById('Subject').value=subject;
+        
 
         var headOfMessage = "+++###+++   "+typeOfReport+" +++###+++"
-        var shipsName="Ships name: "+vesselCapitaLetterlName+" / IMO No.:"+vesselImoNumber
+        var shipsName="Ships name: "+vesselDataCore.mainData+" / IMO No.:"+vesselDataCore.imoShipNumber
         var attentionTo="Attn: DP/CSO"+ '\n' +
                         "cc: superintendent"+ '\n' +
                         '\n' +
@@ -17630,8 +17610,8 @@ Select Signature in Field</label>
       var modalTitle = modalWindowWithEmailBody.querySelector('.modal-title')
       var modalBodyInput = modalWindowWithEmailBody.querySelector('.modal-body input')
 
-      modalTitle.textContent = 'New Report to ' + dataDef.vesselStatic.emailIncident[0][0];
-      modalBodyInput.value = dataDef.vesselStatic.emailIncident[0][0];     
+      modalTitle.textContent = 'New Report to ' + vesselDataCore.emailIncident;
+      modalBodyInput.value = vesselDataCore.emailIncident;     
         
 
 
@@ -17657,9 +17637,9 @@ Select Signature in Field</label>
                                 filedata: base64String,
                                 filename: strforatt+"."+fileExte,
                                 filetype: filetype,
-                                sheetIncidentId:dataDef.vesselStatic.sheetIncidentId[0][0],
-                                cloudFolderIncidentId:dataDef.vesselStatic.cloudFolderIncidentId[0][0],
-                                emailIncident:dataDef.vesselStatic.emailIncident[0][0],  
+                                sheetIncidentId:vesselDataCore.sheetIncidentId,
+                                cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
+                                emailIncident:vesselDataCore.emailIncident[0][0],  
                             };
                 //variables for getting result from gsheet script, success or no and number of the row added
                 var dataMy;
