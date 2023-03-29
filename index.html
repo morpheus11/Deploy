@@ -2,11 +2,10 @@
 <html lang="en">
   <head>
 <script type="text/javascript">
-let versionNumber = "7.4";
+
 let vesselDataCore = {};
-let companyName = "Navomare";
 let handlerSupportEmail = 'handler.navo@gmail.com';
-document.title = companyName+' REPORTING ver.'+versionNumber;
+
 // ctrl+a and then ctrl+j in notepad for remove  
 let helperTextModalAbout = '<ul> 	<li><strong>module follow up:&nbsp;</strong>The latest version of the program comes with two new exciting features. The first one is the &quot;<strong>module follow up</strong>&quot; feature. With this feature, users can keep track of the progress of different modules in the program. It allows users to monitor the status of each module and identify any issues that may arise.</li> 	<li><strong>dynamic query for update fields:&nbsp;</strong>The second new feature is &quot;<strong>dynamic query for update fields</strong>.&quot; This feature enables users to update fields dynamically without having to go through the entire process of updating each field manually. Users can select the fields they want to update and make the changes quickly and efficiently.</li> 	<li>Overall, these new features are designed to enhance the user experience and make the program more efficient and user-friendly.</li> </ul>'
 // 1edTX9YFRHPIUGxWJzoKded_9x0w4FrXwgEoLNMuLUfQ @bd
@@ -16539,7 +16538,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
       </div>
       <div class="modal-footer">
         <button type="btn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" id="gSheet" data-bs-target="#modalWindowWithCircleProgress" data-bs-toggle="modal" data-bs-dismiss="modal"> 
+            <button class="btn btn-primary" id="gSheet" onclick="sendDificiency()" data-bs-dismiss="modal"> 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
                     <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z">
                     </path>
@@ -16571,7 +16570,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
         <div class="progress" style="width:200px; height: auto;margin-left: auto;margin-right: auto "></div>
       </div>
       <div class="modal-footer">         
-        <button class="btn btn-primary" id="backToodal" style="margin-left: auto;margin-right: auto" data-bs-target="#modalWindowWithEmailBody" data-bs-toggle="modal" data-bs-dismiss="modal">
+        <button class="btn btn-primary" id="backToodal" onclick="myCaller()" style="margin-left: auto;margin-right: auto" data-bs-target="#modalWindowWithEmailBody" data-bs-toggle="modal" data-bs-dismiss="modal">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars" viewBox="0 0 16 16">
                 <path d="M3 2.5A1.5 1.5 0 0 1 4.5 1h1A1.5 1.5 0 0 1 7 2.5V5h2V2.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5v2.382a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V14.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 14.5v-3a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5v3A1.5 1.5 0 0 1 5.5 16h-3A1.5 1.5 0 0 1 1 14.5V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V2.5zM4.5 2a.5.5 0 0 0-.5.5V3h2v-.5a.5.5 0 0 0-.5-.5h-1zM6 4H4v.882a1.5 1.5 0 0 1-.83 1.342l-.894.447A.5.5 0 0 0 2 7.118V13h4v-1.293l-.854-.853A.5.5 0 0 1 5 10.5v-1A1.5 1.5 0 0 1 6.5 8h3A1.5 1.5 0 0 1 11 9.5v1a.5.5 0 0 1-.146.354l-.854.853V13h4V7.118a.5.5 0 0 0-.276-.447l-.895-.447A1.5 1.5 0 0 1 12 4.882V4h-2v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V4zm4-1h2v-.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V3zm4 11h-4v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14zm-8 0H2v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14z">
                 </path>
@@ -16639,8 +16638,11 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
         document.getElementById('Veesel_IMO_number').value = vesselDataCore.mainData;
         document.getElementById('deficiency_report_number').value = vesselDataCore.singleDefa;
         document.getElementById("sheetIncidentId").href = 'https://docs.google.com/spreadsheets/d/'+vesselDataCore.sheetIncidentId;
-        document.getElementById("myZipLink").setAttribute("href", "https://reporting.navomare.eu/"+vesselDataCore.emailIncident+versionNumber+".zip");
+        document.getElementById("myZipLink").setAttribute("href", "https://reporting.navomare.eu/"+vesselDataCore.emailIncident+vesselDataCore.version+".zip");
         document.getElementById('recipient-name').value=vesselDataCore.emailIncident;
+        document.getElementById("navbarBrand").innerHTML="Reporting ver."+vesselDataCore.version;
+        document.title = vesselDataCore.companyName+' REPORTING ver.'+vesselDataCore.version;
+        document.getElementById('exampleModalLabel').innerHTML ="Update in new Version "+vesselDataCore.version+" "+vesselDataCore.companyName;
         
         
 
@@ -16661,7 +16663,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     <div class="container-fluid">
       <a class="navbar-brand" id="navbarBrand" href="#"></a>
       <script type="text/javascript">
-        document.getElementById("navbarBrand").innerHTML="Reporting ver."+versionNumber
+        
 
       </script>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -16707,7 +16709,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                 let modal1 = new MyModal(
                             "myModalId1",
                             "Please confirm that the ",
-                            "Query request to "+companyName+" server",
+                            "Query request to "+vesselDataCore.companyName+" server",
                             "Dataset request as ",
                             "followUP()");
                             modal1.createModal(); 
@@ -16745,7 +16747,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     sheetIncidentId:vesselDataCore.sheetIncidentId,
                     cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
                     emailIncident:vesselDataCore.emailIncident,
-                    version:versionNumber,
+                    version:vesselDataCore.version,
                 };
                     console.log(followUpFormData);
                     if(trigger_inst_do_call_send_followup == 'open'){
@@ -16938,17 +16940,17 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                 let modalAbout = new MyModal(
                             "modalAbout",
                             helperTextModalAbout,
-                            "Update in new Version "+versionNumber+" "+companyName,
+                            "Update in new Version "+vesselDataCore.version+" "+vesselDataCore.companyName,
                             "Report Abuse",
                             "reportAbuse()");
-                            modalAbout.createModal(); 
-
-                function modalShow(modalAbout){
-                            var myModal = new bootstrap.Modal(document.getElementById(modalAbout))                            
+                            modalAbout.createModal();
+                function modalShow(para){
+                     
+                            var myModal = new bootstrap.Modal(document.getElementById(para))                            
                             myModal.show()
                 }
                 function reportAbuse(){
-                    mailHandler(handlerSupportEmail,'Report Abuse '+versionNumber+" "+companyName,'Good day,'+ '\n'  +'Dear, with this message i kindly inform you, regarding new bugs finding - like:')
+                    mailHandler(handlerSupportEmail,'Report Abuse '+vesselDataCore.version+" "+vesselDataCore.companyName,'Good day,'+ '\n'  +'Dear, with this message i kindly inform you, regarding new bugs finding - like:')
                 }
                     // window.location.href = "mailto:address@dmail.com";
                     function mailHandler(mail,sub,bod){
@@ -17174,7 +17176,7 @@ Select Signature in Field</label>
 
 
  <div class="mb-3">
-    <button type="button" id="buttonPreview" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalWindowWithEmailBody" data-bs-whatever="incidents@navomare.eu" style="
+    <button type="button" id="buttonPreview" class="btn btn-primary" onclick="myCaller()" style="
     width: 100%;
 "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars" viewBox="0 0 16 16">
   <path d="M3 2.5A1.5 1.5 0 0 1 4.5 1h1A1.5 1.5 0 0 1 7 2.5V5h2V2.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5v2.382a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V14.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 14.5v-3a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5v3A1.5 1.5 0 0 1 5.5 16h-3A1.5 1.5 0 0 1 1 14.5V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V2.5zM4.5 2a.5.5 0 0 0-.5.5V3h2v-.5a.5.5 0 0 0-.5-.5h-1zM6 4H4v.882a1.5 1.5 0 0 1-.83 1.342l-.894.447A.5.5 0 0 0 2 7.118V13h4v-1.293l-.854-.853A.5.5 0 0 1 5 10.5v-1A1.5 1.5 0 0 1 6.5 8h3A1.5 1.5 0 0 1 11 9.5v1a.5.5 0 0 1-.146.354l-.854.853V13h4V7.118a.5.5 0 0 0-.276-.447l-.895-.447A1.5 1.5 0 0 1 12 4.882V4h-2v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V4zm4-1h2v-.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V3zm4 11h-4v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14zm-8 0H2v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14z"></path>
@@ -17280,80 +17282,113 @@ Select Signature in Field</label>
                   
                     
      
-        }
+        };
       
-    </script>
-            
-        
-      
-   <script>
+   
         /*ALL VARIABLES LISTED BELOW:*/
 
         /*id="Veesel_IMO_number" variables START*/
-        var vesselImoNumber;
-        var vesselImoString;
-        var vesselCapitaLetterlName;
-        var vesselCountNumber;
+        // var vesselImoNumber;
+        // var vesselImoString;
+        // var vesselCapitaLetterlName;
+        // var vesselCountNumber;
         /*id="Veesel_IMO_number" variables END*/
 
-        /*id="dateOfIncident" variables START*/
-        var dateOfIncident
-        var yearOfReport
-        /*id="dateOfIncident" variables END*/
+        /*Logic related Dates START*/
+        var dateOfIncident;
+        var yearOfReport;
+        /*Logic related Dates END*/
 
-        var deficiencyReportNumber
-        var voyageNo
+        var deficiencyReportNumber;
+        var voyageNo;
 
         /*id="at_sea_or_in_port" variables START*/
-        var v
-        var atSeaOrInPort
+        var v;
+        var atSeaOrInPort;
         /*id="at_sea_or_in_port" variables END*/
 
         /*id="type_of_report" variables START*/
-        var g
-        var m
-        var typeOfReport
-        var typeOfReportValue
-        var typeOfReportShortString
+ 
+                /*Logic related type_of_report START*/  
+        var g ;
+        var typeOfReport ;
+
+        var m;
+        var typeOfReportValue;
+        var typeOfReportShortString;
+
+
+        /*Logic related type_of_report END*/ 
         /*id="type_of_report" variables END*/
         
         /*id="select_department" variables START*/
-        var k
-        var selectedDepartment
+                /*Logic related select_department START*/
+        var k;
+        var selectedDepartment;
+        /*Logic related select_department END*/
         /*id="select_department" variables END*/
 
 
-        var detailedDescriptionOfIncident
-        var whyDidItHappen
-        var proposedCorrectiveAction
-        var proposedPreventiveAction
+        var detailedDescriptionOfIncident;
+        var whyDidItHappen;
+        var proposedCorrectiveAction;
+        var proposedPreventiveAction;
 
         /*id="Select_Signature_in_Field" variables START*/
-        var l
-        var SelectSignatureInFieldValue
-        var SelectSignatureInFieldText
-        /*id="Select_Signature_in_Field" variables END*/
+        /*Logic related Select_Signature_in_Field START*/
+        var l;
+        var SelectSignatureInFieldValue;
+        var SelectSignatureInFieldText ;
+        
+        /*Logic related Select_Signature_in_Field END*/
 
         /*special for modalWindowWithEmailBody*/
-        var subject
-        var msgBody
-        var headOfMessage
-        var shipsName
-        var attentionTo
-        var alfa
-        var bravo
-        var charlie
-        var delta
-        var echo
-        var foxtrot
-        var golf
-        var hotel
+        var subject;
+
+        var msgBody;
+
+        var headOfMessage ;
+        var shipsName;
+        var attentionTo;
+
+        var alfa;
+        
+        var bravo;
+        
+        var charlie;
+
+        var delta;
+        
+        var echo;
+
+        var foxtrot;
+
+        var golf;
+
+        var hotel;
+       
         /*special for modalWindowWithEmailBody*/
 
         /*post to google script*/
-        var abcde
-        var attentionToGmail
-        var msgBodyForGmail
+        var abcde; 
+        var regexfordashes;
+
+    // Alternative syntax using RegExp constructor
+    // const regex = new RegExp('-|\\s', 'g')
+
+
+
+    var strregexfordashes ;
+    var substregexfordashes;
+
+    // The substituted value will be contained in the result variable
+    var resultregexfordashes;
+
+    var strforatt ;
+
+
+    var attentionToGmail;
+    var msgBodyForGmail;
 
 
         //    function getDefNumber(){
@@ -17427,148 +17462,162 @@ Select Signature in Field</label>
       
         }
         /*this is code above is working for filepond end*/
-        var modalWindowWithEmailBody = document.getElementById('modalWindowWithEmailBody')
-        modalWindowWithEmailBody.addEventListener('show.bs.modal', function (event) {
 
 
-      
-        /*Logic related Dates START*/
-        var dateOfIncident = document.getElementById("date_of_incident").value;
-        var yearOfReport = dateOfIncident.substring(0,4);
-        /*Logic related Dates END*/
+function myCaller(){
+    setDataToVariable().then(function(){showModalWindowWithEmail();})
+}
 
-        var deficiencyReportNumber = document.getElementById("deficiency_report_number").value;
-        var voyageNo = document.getElementById("voyage_no").value;
+        function sendDificiency(){
+            var formData = {
+                                /* last version
+                                Def: deficiencyReportNumber+'o',*/
+                                Def: vesselDataCore.singleDefa,
+                                No: "No",
+                                Year: yearOfReport,
+                                Grade: typeOfReportShortString,  
+                                Ship: vesselDataCore.mainData,  
+                                Description: abcde,  
+                                Root: whyDidItHappen,
+                                Corrective: proposedCorrectiveAction,  
+                                Preventive: proposedPreventiveAction,  
+                                Subject: subject,
+                                MessageBody: msgBodyForGmail,
+                                filedata: base64String,
+                                filename: strforatt+"."+fileExte,
+                                filetype: filetype,
+                                sheetIncidentId:vesselDataCore.sheetIncidentId,
+                                cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
+                                emailIncident:vesselDataCore.emailIncident,  
+                            };
+            console.log('button presed: SHEET CAPA and Outlook')
+            console.log(formData)
 
-        var v = document.getElementById("at_sea_or_in_port")
-        var atSeaOrInPort = v.options[v.selectedIndex].text;
-       
-        /*Logic related type_of_report START*/  
-        var g = document.getElementById("type_of_report");
-        var typeOfReport = g.options[g.selectedIndex].text;
-        var m = document.getElementById("type_of_report");
-        var typeOfReportValue = m.options[g.selectedIndex].value;
-        if (typeOfReportValue==1) {var typeOfReportShortString = "hazocc"}  
-        if (typeOfReportValue==2) {var typeOfReportShortString = "nc"}
-        if (typeOfReportValue==3) {var typeOfReportShortString = "acc_a"}
-        if (typeOfReportValue==4) {var typeOfReportShortString = "acc_b"}  
-        if (typeOfReportValue==5) {var typeOfReportShortString = "acc_c"}
-        if (typeOfReportValue==6) {var typeOfReportShortString = "obs"}
-        if (typeOfReportValue==7) {var typeOfReportShortString = "ca"}
-        if (typeOfReportValue==8) {var typeOfReportShortString = "rec"}
-        /*Logic related type_of_report END*/ 
-        
-        /*Logic related select_department START*/
-        var k = document.getElementById("select_department");
-        var selectedDepartment = k.options[k.selectedIndex].text;
-        /*Logic related select_department END*/
+            let trigger_of_button_sheet_capa_and_outlook;
+            // if(trigger_of_button_sheet_capa_and_outlook == 'open')
+            // {
 
-        /*This we will generate string for attachment name start*/
-        const regexfordashes = /-|\s/g;
+            //     var instance_signIn_Ajax = new ClassAjaxCall(
+            //                 f.parameter.success,
+            //                 f.parameter.error,
+            //                 'https://script.google.com/macros/s/'+scriptCodeCore+'/exec?',
+            //                 {
+            //                     callBack:'authorization',
+            //                     encodedString:mainString,
+                                               
+                                
 
-        // Alternative syntax using RegExp constructor
-        // const regex = new RegExp('-|\\s', 'g')
+            //                 }
 
+            // }
+            
+        }
 
-        
-        const strregexfordashes = dateOfIncident;
-        const substregexfordashes = ``;
+        // This event on show  triggered 
+        function setDataToVariable(){
+            return new Promise(function(resolve, reject) {
+                dateOfIncident = document.getElementById("date_of_incident").value;
+    yearOfReport = dateOfIncident.substring(0,4);
+        regexfordashes = /-|\s/g;
 
-        // The substituted value will be contained in the result variable
-        const resultregexfordashes = strregexfordashes.replace(regexfordashes, substregexfordashes);
-
-        var strforatt = resultregexfordashes+"-"+typeOfReportShortString+"_"+deficiencyReportNumber+"_imo_"+vesselImoNumber;
-
-        console.log('Substitution result: ',strforatt );
-        /*This we will generate string for attachment name end*/
-
-        //E: [ detailed description of incident: what did happen? ]
-        var detailedDescriptionOfIncident = document.getElementById("detailed_description_of_incident").value;
-
-        //F: [ root cause: why did it happen? ]
-        var whyDidItHappen = document.getElementById("why_did_it_happen").value;
-
-        //G: [ proposed corrective action(s): how to rectify? ]
-        var proposedCorrectiveAction = document.getElementById("proposed_corrective_action").value;
-
-
-        //H: [ proposed preventive action(s): what to do to avoid this in future? ]
-        var proposedPreventiveAction = document.getElementById("proposed_preventive_action").value;
-
-        /*Logic related Select_Signature_in_Field START*/
-        var l = document.getElementById("Select_Signature_in_Field");
-        var SelectSignatureInFieldValue = l.options[l.selectedIndex].value;
-        var SelectSignatureInFieldText = l.options[l.selectedIndex].text;
-        if (SelectSignatureInFieldValue==0) {var SelectSignatureInFieldText = "Thanks & brgds"+'\n'+"Master"}  
-        if (SelectSignatureInFieldValue!=0) {var SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText+'\n'+"Master"}
-        /*Logic related Select_Signature_in_Field END*/
-
-        /* last ver of variable
-        var subject ="//"+vesselCountNumber+"/"+vesselCapitaLetterlName+"/ISM/PD/Def Report/"+deficiencyReportNumber+"o/"+yearOfReport+"/"+typeOfReport*/
+    // Alternative syntax using RegExp constructor
+    // const regex = new RegExp('-|\\s', 'g')
 
 
-        var subject ="//"+vesselDataCore.shipNumber+"/"+vesselDataCore.mainData+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport
 
-        document.getElementById('Subject').value=subject;
-        
+    strregexfordashes = dateOfIncident;
+    substregexfordashes = ``;
 
-        var headOfMessage = "+++###+++   "+typeOfReport+" +++###+++"
-        var shipsName="Ships name: "+vesselDataCore.mainData+" / IMO No.:"+vesselDataCore.imoShipNumber
-        var attentionTo="Attn: DP/CSO"+ '\n' +
+    // The substituted value will be contained in the result variable
+    resultregexfordashes = strregexfordashes.replace(regexfordashes, substregexfordashes);
+
+    strforatt = resultregexfordashes+"-"+typeOfReportShortString+"_"+vesselDataCore.singleDefa+"_imo_"+vesselDataCore.imoShipNumber;
+    console.log('Substitution result: ',strforatt );
+    deficiencyReportNumber = document.getElementById("deficiency_report_number").value;
+    voyageNo = document.getElementById("voyage_no").value;
+
+    v = document.getElementById("at_sea_or_in_port")
+    atSeaOrInPort = v.options[v.selectedIndex].text;
+
+    g = document.getElementById("type_of_report");
+    typeOfReport = g.options[g.selectedIndex].text;
+
+    m = document.getElementById("type_of_report");
+    typeOfReportValue = m.options[g.selectedIndex].value;
+
+    if (typeOfReportValue==1) { typeOfReportShortString = "hazocc"}  
+    else if (typeOfReportValue==2) { typeOfReportShortString = "nc"}
+    else if (typeOfReportValue==3) { typeOfReportShortString = "acc_a"}
+    else if (typeOfReportValue==4) { typeOfReportShortString = "acc_b"}  
+    else if (typeOfReportValue==5) { typeOfReportShortString = "acc_c"}
+    else if (typeOfReportValue==6) { typeOfReportShortString = "obs"}
+    else if (typeOfReportValue==7) { typeOfReportShortString = "ca"}
+    else if (typeOfReportValue==8) { typeOfReportShortString = "rec"};
+
+    k = document.getElementById("select_department");
+    selectedDepartment = k.options[k.selectedIndex].text;
+    
+    detailedDescriptionOfIncident = document.getElementById("detailed_description_of_incident").value;
+    whyDidItHappen = document.getElementById("why_did_it_happen").value;
+    proposedCorrectiveAction = document.getElementById("proposed_corrective_action").value;
+    proposedPreventiveAction = document.getElementById("proposed_preventive_action").value;
+    
+    l = document.getElementById("Select_Signature_in_Field");
+    SelectSignatureInFieldValue = l.options[l.selectedIndex].value;
+    SelectSignatureInFieldText = l.options[l.selectedIndex].text;
+
+    if (SelectSignatureInFieldValue==0) {SelectSignatureInFieldText = "Thanks & brgds"+'\n'+"Master"}  
+    else if (SelectSignatureInFieldValue!=0) {SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText+'\n'+"Master"};
+
+    subject ="//"+vesselDataCore.shipNumber+"/"+vesselDataCore.mainData+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport;
+    document.getElementById('Subject').value=subject;
+
+    
+
+        headOfMessage = "+++###+++   "+typeOfReport+" +++###+++";
+        shipsName="Ships name: "+vesselDataCore.mainData+" / IMO No.:"+vesselDataCore.imoShipNumber
+        attentionTo="Attn: DP/CSO"+ '\n' +
                         "cc: superintendent"+ '\n' +
                         '\n' +
-                        "Dear Sir,"
-        var attentionToGmail="Attn: DP/CSO"+ '<br>' +
+                        "Dear Sir,";
+
+        alfa="A: "+dateOfIncident+" / Voy no: "+voyageNo
+        
+        bravo="B: "+atSeaOrInPort
+        
+        charlie="C: "+typeOfReport
+
+        delta="D: "+selectedDepartment
+        
+        echo="E: "+detailedDescriptionOfIncident
+
+        foxtrot="F: "+whyDidItHappen
+
+        golf="G: "+proposedCorrectiveAction
+
+        hotel="H: "+proposedPreventiveAction
+       
+        /*special for modalWindowWithEmailBody*/
+
+        /*post to google script*/
+        abcde = 
+        alfa
+            +'\n' +
+        bravo   
+            +'\n' +
+        charlie
+            +'\n' +
+        delta
+            +'\n' +
+        echo; 
+
+
+
+    attentionToGmail="Attn: DP/CSO"+ '<br>' +
                         "cc: superintendent"+ '<br>' +
                         '<br>' +
                         "Dear Sir,";
-
-        var alfa="A: "+dateOfIncident+" / Voy no: "+voyageNo
-        
-        var bravo="B: "+atSeaOrInPort
-        
-        var charlie="C: "+typeOfReport
-
-        var delta="D: "+selectedDepartment
-        
-        var echo="E: "+detailedDescriptionOfIncident
-
-        var foxtrot="F: "+whyDidItHappen
-
-        var golf="G: "+proposedCorrectiveAction
-
-        var hotel="H: "+proposedPreventiveAction
-
-        /*special for modalWindowWithEmailBody START*/
-        var msgBody =    
-        
-        headOfMessage+ '\n' 
-            +'\n' +
-        shipsName+ '\n' 
-            +'\n' +
-        attentionTo  + '\n' 
-            +'\n' +
-        alfa+ '\n' 
-            +'\n' +
-        bravo+ '\n'     
-            +'\n' +
-        charlie+ '\n' 
-            +'\n' +
-        delta+ '\n'  
-            +'\n' +
-        echo+ '\n'  
-            +'\n' +
-        foxtrot+ '\n'  
-            +'\n' +
-        golf+ '\n'  
-            +'\n' +
-        hotel+ '\n' 
-             +'\n' +
-        SelectSignatureInFieldText+ '\n' 
-             +'\n' +
-        "ver."+versionNumber;
-        /*special for modalWindowWithEmailBody END*/
-        var msgBodyForGmail =    
+    msgBodyForGmail =    
         
         headOfMessage+ '<br>' 
             +'<br>' +
@@ -17594,20 +17643,37 @@ Select Signature in Field</label>
              +'<br>' +
         SelectSignatureInFieldText+ '<br>' 
              +'<br>' +
-"ver."+versionNumber;
+"ver."+vesselDataCore.version;
+msgBody =    
+        
+        headOfMessage+ '\n' 
+            +'\n' +
+        shipsName+ '\n' 
+            +'\n' +
+        attentionTo  + '\n' 
+            +'\n' +
+        alfa+ '\n' 
+            +'\n' +
+        bravo+ '\n'     
+            +'\n' +
+        charlie+ '\n' 
+            +'\n' +
+        delta+ '\n'  
+            +'\n' +
+        echo+ '\n'  
+            +'\n' +
+        foxtrot+ '\n'  
+            +'\n' +
+        golf+ '\n'  
+            +'\n' +
+        hotel+ '\n' 
+             +'\n' +
+        SelectSignatureInFieldText+ '\n' 
+             +'\n' +
+        "ver."+vesselDataCore.version;
 
-        var abcde = 
-        alfa
-            +'\n' +
-        bravo   
-            +'\n' +
-        charlie
-            +'\n' +
-        delta
-            +'\n' +
-        echo; 
-      // Update the modal's content.
-      var modalTitle = modalWindowWithEmailBody.querySelector('.modal-title')
+
+var modalTitle = modalWindowWithEmailBody.querySelector('.modal-title')
       var modalBodyInput = modalWindowWithEmailBody.querySelector('.modal-body input')
 
       modalTitle.textContent = 'New Report to ' + vesselDataCore.emailIncident;
@@ -17616,114 +17682,39 @@ Select Signature in Field</label>
 
 
       //inser info in modalWindowWithEmailBody
-     document.getElementById('message-text').value=msgBody
      
-      $('#gSheet').click(function (event) {
-
-              var formData = {
-                                /* last version
-                                Def: deficiencyReportNumber+'o',*/
-                                Def: deficiencyReportNumber,
-                                No: "No",
-                                Year: yearOfReport,
-                                Grade: typeOfReportShortString,  
-                                Ship: vesselCapitaLetterlName,  
-                                Description: abcde,  
-                                Root: whyDidItHappen,
-                                Corrective: proposedCorrectiveAction,  
-                                Preventive: proposedPreventiveAction,  
-                                Subject: subject,
-                                MessageBody: msgBodyForGmail,
-                                filedata: base64String,
-                                filename: strforatt+"."+fileExte,
-                                filetype: filetype,
-                                sheetIncidentId:vesselDataCore.sheetIncidentId,
-                                cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
-                                emailIncident:vesselDataCore.emailIncident[0][0],  
-                            };
-                //variables for getting result from gsheet script, success or no and number of the row added
-                var dataMy;
-                var rowMy;
+        
+    resolve();
+  });
 
 
-    
-                $.ajax({
-                      type: "POST",
-                      url: 'https://script.google.com/macros/s/'+scriptHashSetValue+'/exec',
-                      data: formData,
-                      dataType: "json",
-                      encode: true,
-                       }).done(function (data
-                        ) {
-                      console.log(data);
-                      var s=  document.getElementById('labelRecepient');
-                      // Modal window get a message with red typing how many row added in gsheet
-                      dataMy = data.result;
-                      rowMy = data.row;
-                      s.style.color = "red" ;
-                      s.innerHTML = 'Success Upload to Server Row No. '+rowMy+' added';
-                    })
+
+   };
+
+        function showModalWindowWithEmail(){
 
 
-                            
-                    
-                      // https://github.com/tigrr/circle-progress
-                      var timeSec = 1000;
-                      var timeMiliSec = 100;
-                      var counterMy=0;
-                      const result = 60; 
-                      var resultTwo = 100;    
-                      var counterMyTwo = 60; 
-                    
-                      var circleProgressVar =   new CircleProgress('.progress');
-                      circleProgressVar.max = 100;
-                      circleProgressVar.textFormat = 'percent';        
-                      timerOne(timeMiliSec,counterMy,result);
-                      function timerOne(timeMiliSec,counterMy,result) {
-                        const id = setInterval(func, timeMiliSec);
-                        function func() {
-                        if (counterMy == result) {
-                        
-                            clearInterval(id);
-
-                           if(result == 60 && dataMy != 'success'){timerOne(1000,60,70)}      
-                      else if(result == 70 && dataMy != 'success'){timerOne(100,70,80)}
-                      else if(result == 80 && dataMy != 'success'){timerOne(1000,80,90)}
-                      else if(result == 90 && dataMy != 'success'){timerOne(100,90,99)}
-                      else if(dataMy == 'success'){
-                        // code below generated message on modal window Success Upload to Server ...
-                        document.getElementById('modalWindowWithCircleProgressLabel').innerHTML='Success Upload to Server Row No. '+rowMy+' added';
-                        // code below generated new type of spinner 
-                        document.getElementById("spinner").className = "spinner-grow text-success";
-                        // code below generated value 100 for circle Progress bar
-                        circleProgressVar.value  = 100 
-                                        /*time delay for reload page*/
-                                        var delayInMilliseconds = 2000; //1 second
-                                        setTimeout(function() {
-                                        //your code to be executed after 1 second
-                                        location.reload();
-                                        return false;
-                                        }, delayInMilliseconds);
-
-                         }
-                        else if(dataMy != 'success'){
-                        document.getElementById('modalWindowWithCircleProgressLabel').innerHTML='Error Upload to Server 0 Rows added check you internet connection';
-                        // code below generated new type of spinner danger
-                        document.getElementById("spinner").className = "spinner-grow text-danger";
-                         }
-                        }
-                        else  {
-                        counterMy++;  
-                  
-                        circleProgressVar.value  = counterMy;
-              }      
-             }
-            }
-
-                                                })
+            
 
 
-    })
+
+
+
+
+                            var myModal = new bootstrap.Modal(document.getElementById('modalWindowWithEmailBody'))
+                            document.getElementById('message-text').value=msgBody
+                            myModal.show()
+
+
+
+
+
+
+
+        
+
+
+    }
 
 
     </script>
