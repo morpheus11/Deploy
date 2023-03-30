@@ -16581,7 +16581,12 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   </div>
 </div>
 <script>
+    let triger_signIn = 'open';
     function signIn(){
+        if (triger_signIn == 'open'){
+            triger_signIn = 'streaming';
+    console.log("pressed button: echo of signIn() and triger_signIn = "+triger_signIn);
+
         let instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('signInButton','load')
         const f = {
                             parameter: {
@@ -16591,8 +16596,9 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                         
                                 console.log(data);
                                 let instance_button_do_status_success = new ClassElementTypeCheckDoStyle('signInButton','','Sign In','#0d6efd')
-                                triger_callFinderDefSpecific = 'loaded';
-                                
+                                triger_signIn = 'open';
+                                console.log("ajax call success: echo of signIn() and triger_signIn = "+triger_signIn)
+
                                 const str = data;
                                 const regex = /\./; // matches a dot
                                 const substrings = str.split(regex);
@@ -16602,11 +16608,12 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                                             sessionStorage.setItem(key, vesselDataCore[key]);
                                         }
                                     }
-                                authorizationDone();
+                                if(vesselDataCore.mainData != null){authorizationDone();}
+                                
                             },
                             error: (data) => {
                                 let instance_button_do_status_error = new ClassElementTypeCheckDoStyle('signInButton','error')
-                                triger_callFinderDefSpecific = 'open';
+                                triger_signIn = 'open';
                                 console.log(data);
                             },
                             },
@@ -16625,7 +16632,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                                 
 
                             }
-        )
+        )}
     };
     function authorizationDone(){
         document.getElementById("logoImg").src="https://reporting.navomare.eu/img/"+vesselDataCore.emailIncident+".png";
@@ -16634,6 +16641,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
         document.getElementById('navbarPage1').setAttribute("style", "display: block;background-color: #0e2a47;");
         document.getElementById('dropDownVesselName').innerHTML = vesselDataCore.mainData;
         document.getElementById('dropDownCompanyName').innerHTML = vesselDataCore.companyName;
+        document.getElementById('dropDownemailIncident').innerHTML = vesselDataCore.emailIncident;
+
         document.getElementById('dropDownimoShipNumber').innerHTML = vesselDataCore.imoShipNumber;
         document.getElementById('Veesel_IMO_number').value = vesselDataCore.mainData;
         document.getElementById('deficiency_report_number').value = vesselDataCore.singleDefa;
@@ -16642,17 +16651,28 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
         document.getElementById('recipient-name').value=vesselDataCore.emailIncident;
         document.getElementById("navbarBrand").innerHTML="Reporting ver."+vesselDataCore.version;
         document.title = vesselDataCore.companyName+' REPORTING ver.'+vesselDataCore.version;
-        document.getElementById('exampleModalLabel').innerHTML ="Update in new Version "+vesselDataCore.version+" "+vesselDataCore.companyName;
+        var modal = $('#modalAbout');
+            modal.find('.modal-title').text("Update in new Version "+vesselDataCore.version+" "+vesselDataCore.companyName);
+            modal.modal();
+        var modal2 = $('#myModalId1');
+            modal2.find('.modal-title').text("Query request to "+vesselDataCore.companyName+" server");
+            modal2.modal();
+        // document.getElementById('exampleModalLabel').innerHTML ="Update in new Version "+vesselDataCore.version+" "+vesselDataCore.companyName;
         
         
 
     };
-    function authorizationLogout(){
+    function authorizationLogout(Callback){
+        Callback()
         sessionStorage.clear();
-        
+        // window.location.reload();
+        // showReporting()
         document.getElementById('logon').setAttribute("style", "display: block;");
         document.getElementById('page1').setAttribute("style", "display: none;");
         document.getElementById('navbarPage1').setAttribute("style", "display: none;");
+        let instanse_formDiv_ClassOuterHtmlRemover = new ClassOuterHtmlRemover('formDiv');
+    triger_callFinderDefSpecific = 'open';
+    let instance_button_do_status_success = new ClassElementTypeCheckDoStyle('btnRequestAddInfo','see')
         
     };
 </script>
@@ -16720,6 +16740,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
                             let a = document.getElementById(modal1.modalIdBody);
                             a.innerHTML = modal1.bodyText+vesselDataCore.mainData+" is proper selected vessel";
+
+                            
                             var myModal = new bootstrap.Modal(document.getElementById('myModalId1'))
                             
                             myModal.show()
@@ -16746,6 +16768,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     filetype: filetype,
                     sheetIncidentId:vesselDataCore.sheetIncidentId,
                     cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
+                    spreadsheetName:vesselDataCore.spreadsheetName,
                     emailIncident:vesselDataCore.emailIncident,
                     version:vesselDataCore.version,
                 };
@@ -16783,6 +16806,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     }
                 };
                 function showReporting(){
+                    if(document.getElementById("buttonFollowUP").innerHTML == "REPORTING"){
                     let objectToShow = [
                         "Veesel_IMO_number",
                         "voyage_no",
@@ -16814,6 +16838,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     "label_follow_up_description_remarks",
                     ];
 
+                    $("#select_deficiency_report_number").empty();
+
                     for(let i = 0;i<objectToHide.length;i++){
                        document.getElementById(objectToHide[i]).style = "display:none"
                     }
@@ -16829,6 +16855,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                     
                     document.getElementById("buttonFollowUP").setAttribute('onclick','modalServerAsk()')
                 }
+            }
                 function followUP(){
                  
                     $('#myModalId1').modal('hide');
@@ -16867,7 +16894,12 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                         'background_of_main_column_for_fields'
                         );
 
-                    
+                        var x = document.getElementById("select_deficiency_report_number");
+
+                        var option = document.createElement("option");
+                        option.text = "...loading...wait...";
+                        x.add(option);
+
                     for(let i = 0;i<objectToHide.length;i++){
                        document.getElementById(objectToHide[i]).style = "display:none"
                     }
@@ -16966,15 +16998,17 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
       </div>
       <div class="flex-shrink-0 dropdown">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="./assets/img/captain_64.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+          <img src="https://reporting.navomare.eu/img/captain_64.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
-        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="position: fixed; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);" data-popper-placement="bottom-end">
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="position: fixed;inset: 0px 0px auto auto;margin-top: 14px;transform: translate(0px, 34px);margin-right: 10px;" data-popper-placement="bottom-end">
           <li><a class="dropdown-item" id="dropDownCompanyName" ></a></li>
           <li><a class="dropdown-item"  id="dropDownVesselName" ></a></li>
           <li><a class="dropdown-item"  id="dropDownimoShipNumber" ></a></li>
+          <li><a class="dropdown-item"  id="dropDownemailIncident" ></a></li>
           <li><a class="dropdown-item" style="display:none;" href="#">Profile</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" onclick="authorizationLogout()" href="#">Sign out</a></li>
+          <li><a class="dropdown-item" onclick="authorizationLogout(()=>showReporting())" href="#">Sign out</a></li> 
+
         </ul>
       </div>
     </div>
@@ -17016,7 +17050,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 <input type="text" class="form-control" id="deficiency_report_number" readonly="readonly">
 
     <select class="form-select" id="select_deficiency_report_number" onchange="instance_ClassSelectElementDoParse.triggeredOnChangeSelectElement(instance_ClassSelectElementDoParse.myArray,instance_ClassSelectElementDoParse.selectElement,instance_ClassSelectElementDoParse.textArea,1,3)" aria-label="Default select example" style="display: none;">
-        <option value="" disabled selected>loading...wait...</option>       
+        <!-- <option value="" disabled selected>loading...wait...</option>        -->
    </select>
                 </div>
                 <div class="mb-3">
@@ -17033,8 +17067,10 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
    let triger_callFinderDefSpecific = 'open';
     function callFinderDefSpecific(selectElement){
 if (triger_callFinderDefSpecific == 'open'){
-    triger_callFinderDefSpecific = 'close';
-    let instanse_formDiv_ClassOuterHtmlRemover = new ClassOuterHtmlRemover('formDiv');
+    triger_callFinderDefSpecific = 'streaming';
+    console.log("pressed button: echo of callFinderDefSpecific() and triger_callFinderDefSpecific = "+triger_callFinderDefSpecific);
+    
+        let instanse_formDiv_ClassOuterHtmlRemover = new ClassOuterHtmlRemover('formDiv');
         let instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('btnRequestAddInfo','load')
         let e = document.getElementById(selectElement);    
         let k = e.options[e.selectedIndex].text;
@@ -17065,15 +17101,16 @@ if (triger_callFinderDefSpecific == 'open'){
                             'https://script.google.com/macros/s/'+scriptCodeCore+'/exec?',
                             {
                                 callBack:'findValueReturnJSON',
-                                spreadSheetId:sheetIncidentId,
-                                sheetName:sheetName,
+                                spreadSheetId: vesselDataCore.sheetIncidentId,
+                                sheetName:vesselDataCore.spreadsheetName,
                                 dataForSearch:k,
 
                             }
         );
-        console.log("hello world "+k)
+       
 };
 if (triger_callFinderDefSpecific == 'loaded'){
+    console.log("pressed button: echo of callFinderDefSpecific() triger_callFinderDefSpecific == 'loaded' start remove OuterHtmlRemover");
     let instanse_formDiv_ClassOuterHtmlRemover = new ClassOuterHtmlRemover('formDiv');
     triger_callFinderDefSpecific = 'open';
     let instance_button_do_status_success = new ClassElementTypeCheckDoStyle('btnRequestAddInfo','see')
@@ -17203,7 +17240,7 @@ Select Signature in Field</label>
     background-image: linear-gradient(to bottom, #012d52, #005c9b, #a0e0ff, #00406e, #012643);
 ">
       
-        <img class="mb-4" src="./assets/img/logo.png" alt="">
+        <img class="mb-4" src="https://reporting.navomare.eu/img/lock.png" alt="">
         <h1 class="h3 mb-3 fw-normal" style="
     color: aliceblue;
 ">CYBER SECURITY</h1>
@@ -17277,7 +17314,7 @@ Select Signature in Field</label>
                     // add the key-value pair to the object
                     vesselDataCore[key] = value;
                     };
-                    if((vesselDataCore.exp*1000 - Date.now())>0){authorizationDone()}else {authorizationLogout()};
+                    if((vesselDataCore.exp*1000 - Date.now())>0){authorizationDone()}else {authorizationLogout(()=>showReporting)};
 
                   
                     
@@ -17468,12 +17505,18 @@ function myCaller(){
     setDataToVariable().then(function(){showModalWindowWithEmail();})
 }
 
+let trigger_of_button_sheet_capa_and_outlook;
+
         function sendDificiency(){
+            trigger_of_button_sheet_capa_and_outlook = 'open';
+            let instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonPreview','load');
             var formData = {
                                 /* last version
                                 Def: deficiencyReportNumber+'o',*/
-                                Def: vesselDataCore.singleDefa,
+                                callBack:'mainDefSend',
+                                defReportNumber: vesselDataCore.singleDefa,
                                 No: "No",
+                                shipNumber:vesselDataCore.shipNumber,
                                 Year: yearOfReport,
                                 Grade: typeOfReportShortString,  
                                 Ship: vesselDataCore.mainData,  
@@ -17488,34 +17531,65 @@ function myCaller(){
                                 filetype: filetype,
                                 sheetIncidentId:vesselDataCore.sheetIncidentId,
                                 cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
-                                emailIncident:vesselDataCore.emailIncident,  
+                                emailIncident:vesselDataCore.emailIncident,
+                                spreadsheetName:vesselDataCore.spreadsheetName,  
                             };
-            console.log('button presed: SHEET CAPA and Outlook')
-            console.log(formData)
+            console.log('button presed: SHEET CAPA and Outlook');
+            console.log(formData);
 
-            let trigger_of_button_sheet_capa_and_outlook;
-            // if(trigger_of_button_sheet_capa_and_outlook == 'open')
-            // {
-
-            //     var instance_signIn_Ajax = new ClassAjaxCall(
-            //                 f.parameter.success,
-            //                 f.parameter.error,
-            //                 'https://script.google.com/macros/s/'+scriptCodeCore+'/exec?',
-            //                 {
-            //                     callBack:'authorization',
-            //                     encodedString:mainString,
-                                               
+            const f = {
+                            parameter: {
+                            success: (data) => {
                                 
+                                
+                        
+                                console.log(data);
+                                let instance_button_do_status_success = new ClassElementTypeCheckDoStyle('buttonPreview','','Sign In','#0d6efd')
+                                trigger_of_button_sheet_capa_and_outlook = 'open';
+                                console.log("ajax call success: echo of signIn() and triger_signIn = "+triger_signIn)
 
-            //                 }
+                                
+                                
+                            },
+                            error: (data) => {
+                                let instance_button_do_status_error = new ClassElementTypeCheckDoStyle('buttonPreview','error')
+                                trigger_of_button_sheet_capa_and_outlook = 'open';
+                                console.log(data);
+                            },
+                            },
+                        };
+            
+            if(trigger_of_button_sheet_capa_and_outlook == 'open')
+            {
+                trigger_of_button_sheet_capa_and_outlook = 'close';
+                var instance_signIn_Ajax = new ClassAjaxCall(
+                            f.parameter.success,
+                            f.parameter.error,
+                            'https://script.google.com/macros/s/'+scriptCodeCore+'/exec?',
+                            formData
 
-            // }
+                            )
+
+            }
             
         }
 
         // This event on show  triggered 
         function setDataToVariable(){
             return new Promise(function(resolve, reject) {
+                g = document.getElementById("type_of_report");
+    typeOfReport = g.options[g.selectedIndex].text;
+                m = document.getElementById("type_of_report");
+    typeOfReportValue = m.options[g.selectedIndex].value;
+
+    if (typeOfReportValue==1) { typeOfReportShortString = "hazocc"}  
+    else if (typeOfReportValue==2) { typeOfReportShortString = "nc"}
+    else if (typeOfReportValue==3) { typeOfReportShortString = "acc_a"}
+    else if (typeOfReportValue==4) { typeOfReportShortString = "acc_b"}  
+    else if (typeOfReportValue==5) { typeOfReportShortString = "acc_c"}
+    else if (typeOfReportValue==6) { typeOfReportShortString = "obs"}
+    else if (typeOfReportValue==7) { typeOfReportShortString = "ca"}
+    else if (typeOfReportValue==8) { typeOfReportShortString = "rec"};            
                 dateOfIncident = document.getElementById("date_of_incident").value;
     yearOfReport = dateOfIncident.substring(0,4);
         regexfordashes = /-|\s/g;
@@ -17531,7 +17605,7 @@ function myCaller(){
     // The substituted value will be contained in the result variable
     resultregexfordashes = strregexfordashes.replace(regexfordashes, substregexfordashes);
 
-    strforatt = resultregexfordashes+"-"+typeOfReportShortString+"_"+vesselDataCore.singleDefa+"_imo_"+vesselDataCore.imoShipNumber;
+    strforatt = resultregexfordashes+"-"+typeOfReportShortString+"_"+vesselDataCore.shipNumber+"-"+vesselDataCore.singleDefa+"_imo_"+vesselDataCore.imoShipNumber;
     console.log('Substitution result: ',strforatt );
     deficiencyReportNumber = document.getElementById("deficiency_report_number").value;
     voyageNo = document.getElementById("voyage_no").value;
@@ -17539,20 +17613,9 @@ function myCaller(){
     v = document.getElementById("at_sea_or_in_port")
     atSeaOrInPort = v.options[v.selectedIndex].text;
 
-    g = document.getElementById("type_of_report");
-    typeOfReport = g.options[g.selectedIndex].text;
+    
 
-    m = document.getElementById("type_of_report");
-    typeOfReportValue = m.options[g.selectedIndex].value;
 
-    if (typeOfReportValue==1) { typeOfReportShortString = "hazocc"}  
-    else if (typeOfReportValue==2) { typeOfReportShortString = "nc"}
-    else if (typeOfReportValue==3) { typeOfReportShortString = "acc_a"}
-    else if (typeOfReportValue==4) { typeOfReportShortString = "acc_b"}  
-    else if (typeOfReportValue==5) { typeOfReportShortString = "acc_c"}
-    else if (typeOfReportValue==6) { typeOfReportShortString = "obs"}
-    else if (typeOfReportValue==7) { typeOfReportShortString = "ca"}
-    else if (typeOfReportValue==8) { typeOfReportShortString = "rec"};
 
     k = document.getElementById("select_department");
     selectedDepartment = k.options[k.selectedIndex].text;
