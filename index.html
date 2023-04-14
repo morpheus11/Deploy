@@ -16755,6 +16755,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                 let trigger_inst_do_call_send_followup = 'open';
                 var instance_ClassSelectElementDoParse;
                 function sendFollowup(){
+                    if (document.getElementById("select_followUp_or_closing").value != 'Select: FollowUp or Closing Report'){
                     let followUpFormData = {
                     callBack:'followUpReport',    
                     vesselName:vesselDataCore.mainData,
@@ -16804,7 +16805,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                             followUpFormData
                         );  
                     }
-                };
+                }else{alert('Please select first status Closed or FollowUP!!!!!!!')}}
                 function showReporting(){
                     if(document.getElementById("buttonFollowUP").innerHTML == "REPORTING"){
                     let objectToShow = [
@@ -17181,12 +17182,16 @@ D: [ department: deck, engine, catering, other? ]</label>
 Select Signature in Field</label>
      <select class="form-select" id="Select_Signature_in_Field" aria-label="Default select example">
           <option selected value="0">Master</option>
-          <option value="1">C/E</option>
-          <option value="2">C/O</option>
-          <option value="3">2/O</option>
-          <option value="4">2/E</option>  
-          <option value="5">3/O</option>
-          <option value="6">ECO</option>           
+          <option value="1">CEO</option>
+          <option value="2">DPA</option>
+          <option value="3">CSO</option>
+          <option value="4">QM</option>
+          <option value="5">C/E</option>
+          <option value="6">C/O</option>
+          <option value="7">2/O</option>
+          <option value="8">2/E</option>  
+          <option value="9">3/O</option>
+          <option value="10">ECO</option>           
      </select>
  </div>
 
@@ -17544,8 +17549,14 @@ let trigger_of_button_sheet_capa_and_outlook;
                                 
                         
                                 console.log(data);
-                                let instance_button_do_status_success = new ClassElementTypeCheckDoStyle('buttonPreview','','Sign In','#0d6efd')
-                                trigger_of_button_sheet_capa_and_outlook = 'open';
+                                let instance_button_do_status_success = new ClassElementTypeCheckDoStyle('buttonPreview','',emailCheckIcon+' success sent your msg','#000000')
+                                setTimeout(()=>{
+                                    instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonPreview','',emailCheckIcon+' send report',colorButtonBlueLight);
+                                    trigger_of_button_sheet_capa_and_outlook = 'open';
+                                    setTimeout(()=>{location.reload();},5000)
+                                },5000);
+                                
+                               
                                 console.log("ajax call success: echo of signIn() and triger_signIn = "+triger_signIn)
 
                                 
@@ -17629,8 +17640,8 @@ let trigger_of_button_sheet_capa_and_outlook;
     SelectSignatureInFieldValue = l.options[l.selectedIndex].value;
     SelectSignatureInFieldText = l.options[l.selectedIndex].text;
 
-    if (SelectSignatureInFieldValue==0) {SelectSignatureInFieldText = "Thanks & brgds"+'\n'+"Master"}  
-    else if (SelectSignatureInFieldValue!=0) {SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText+'\n'+"Master"};
+   
+    SelectSignatureInFieldText="Thanks & brgds"+'\n'+SelectSignatureInFieldText;
 
     subject ="//"+vesselDataCore.shipNumber+"/"+vesselDataCore.mainData+"/ISM/PD/Def Report/"+deficiencyReportNumber+"/"+typeOfReport;
     document.getElementById('Subject').value=subject;
