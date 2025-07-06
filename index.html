@@ -5,7 +5,7 @@
 <script type="text/javascript">
 
 let vesselDataCore = {};
-let currentVersion = 8.2;
+let currentVersion = 8.3;
  
 let handlerSupportEmail = 'handler.navo@gmail.com';
 
@@ -16758,59 +16758,89 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
                   
                 let trigger_inst_do_call_send_followup = 'open';
                 var instance_ClassSelectElementDoParse;
-                function sendFollowup(){
-                    if (document.getElementById("select_followUp_or_closing").value != 'Select: FollowUp or Closing Report'){
-                    let followUpFormData = {
-                    callBack:'followUpReport',    
-                    vesselName:vesselDataCore.mainData,
-                    dateFollowUp:document.getElementById('date_of_incident').value,    
-                    defReportNumber:document.getElementById('select_deficiency_report_number').options[document.getElementById('select_deficiency_report_number').selectedIndex].text,
-                    followUpStatus:document.getElementById('select_followUp_or_closing').options[document.getElementById('select_followUp_or_closing').selectedIndex].text,
-                    followUpDescription:document.getElementById('follow_up_description_remarks').value,
-                    followUpSignature:document.getElementById('Select_Signature_in_Field').options[document.getElementById('Select_Signature_in_Field').selectedIndex].text,
-                    filedata: base64String,
-                    filename: 'sabininaMama'+"."+fileExte,
-                    filetype: filetype,
-                    sheetIncidentId:vesselDataCore.sheetIncidentId,
-                    cloudFolderIncidentId:vesselDataCore.cloudFolderIncidentId,
-                    spreadsheetName:vesselDataCore.spreadsheetName,
-                    emailIncident:vesselDataCore.emailIncident,
-                    shipEmail:vesselDataCore.shipEmail,
-                    version:currentVersion,
-                };
-                    console.log(followUpFormData);
-                    if(trigger_inst_do_call_send_followup == 'open'){
-                        trigger_inst_do_call_send_followup = 'close';
-                        
-                        let instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonlol','load')
-                        const f = {
-                            parameter: {
-                            success: (data) => {
-                                
-                                console.log(data);
-                                instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonlol','',emailCheckIcon+' success query','#000000')
-                                setTimeout(()=>{
-                                    instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonlol','',sendIcon+' send report',colorButtonBlueLight);
-                                    trigger_inst_do_call_send_followup = 'open';
-                                },5000);
-                                
-                            },
-                            error: (data) => {
-                                let instance_button_do_status_error = new ClassElementTypeCheckDoStyle('buttonlol','error')
-                                trigger_inst_do_call_send_followup = 'open';
-                                console.log(data);
-                            },
-                            },
-                        };
-                        //instance of class example for  start instance with constructor
-                        let inst_do_call_send_followup = new ClassAjaxCall(
-                            f.parameter.success,
-                            f.parameter.error,
-                            'https://script.google.com/macros/s/'+scriptCodeCore+'/exec?',
-                            followUpFormData
-                        );  
-                    }
-                }else{alert('Please select first status Closed or FollowUP!!!!!!!')}}
+               function sendFollowup() {
+    const statusValue = document.getElementById("select_followUp_or_closing").value;
+
+    if (statusValue !== 'Select: FollowUp or Closing Report') {
+        const followUpStatus = document.getElementById('select_followUp_or_closing').options[
+            document.getElementById('select_followUp_or_closing').selectedIndex
+        ].text;
+
+        const filename = 'sabininaMama' + "." + fileExte;
+
+        let followUpFormData = {
+            callBack: 'followUpReport',
+            vesselName: vesselDataCore.mainData,
+            dateFollowUp: document.getElementById('date_of_incident').value,
+            defReportNumber: document.getElementById('select_deficiency_report_number').options[
+                document.getElementById('select_deficiency_report_number').selectedIndex
+            ].text,
+            followUpStatus: followUpStatus,
+            followUpDescription: document.getElementById('follow_up_description_remarks').value,
+            followUpSignature: document.getElementById('Select_Signature_in_Field').options[
+                document.getElementById('Select_Signature_in_Field').selectedIndex
+            ].text,
+            filedata: base64String,
+            filename: filename,
+            filetype: filetype,
+            sheetIncidentId: vesselDataCore.sheetIncidentId,
+            cloudFolderIncidentId: vesselDataCore.cloudFolderIncidentId,
+            spreadsheetName: vesselDataCore.spreadsheetName,
+            emailIncident: vesselDataCore.emailIncident,
+            shipEmail: vesselDataCore.shipEmail,
+            version: currentVersion,
+        };
+
+        // 🔍 Check: Prevent sending if attachment is missing for Closing Report
+if (!base64String && followUpStatus === "Closing-Report") {
+    alert("Attachment required for Closing Report");
+    return; // ⛔ Stop sending
+}
+
+        console.log(followUpFormData);
+
+        if (trigger_inst_do_call_send_followup === 'open') {
+            trigger_inst_do_call_send_followup = 'close';
+
+            let instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonlol', 'load');
+
+            const f = {
+                parameter: {
+                    success: (data) => {
+    console.log(data);
+
+    // ✅ Clear file-related variables after successful send
+    base64String = "";
+    fileExte = "";
+    
+    instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonlol', '', emailCheckIcon + ' success query', '#000000');
+    
+    setTimeout(() => {
+        instance_button_do_status_loading = new ClassElementTypeCheckDoStyle('buttonlol', '', sendIcon + ' send report', colorButtonBlueLight);
+        trigger_inst_do_call_send_followup = 'open';
+    }, 5000);
+},
+
+                    error: (data) => {
+                        let instance_button_do_status_error = new ClassElementTypeCheckDoStyle('buttonlol', 'error');
+                        trigger_inst_do_call_send_followup = 'open';
+                        console.log(data);
+                    },
+                },
+            };
+
+            let inst_do_call_send_followup = new ClassAjaxCall(
+                f.parameter.success,
+                f.parameter.error,
+                'https://script.google.com/macros/s/' + scriptCodeCore + '/exec?',
+                followUpFormData
+            );
+        }
+    } else {
+        alert('Please select the status: Closed or Follow-Up!');
+    }
+}
+
                 function showReporting(){
                     if(document.getElementById("buttonFollowUP").innerHTML == "REPORTING"){
                     let objectToShow = [
